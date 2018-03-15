@@ -65,18 +65,30 @@
 #define X_STEP_PIN         P2_00
 #define X_DIR_PIN          P0_05
 #define X_ENABLE_PIN       P0_04
+#ifndef X_CS_PIN
+  #define X_CS_PIN         P2_11
+#endif
 
 #define Y_STEP_PIN         P2_01
 #define Y_DIR_PIN          P0_11
 #define Y_ENABLE_PIN       P0_10
+#ifndef Y_CS_PIN
+  #define Y_CS_PIN         P4_28
+#endif
 
 #define Z_STEP_PIN         P2_02
 #define Z_DIR_PIN          P0_20
 #define Z_ENABLE_PIN       P0_19
+#ifndef Z_CS_PIN
+  #define Z_CS_PIN         P1_24
+#endif
 
 #define E0_STEP_PIN        P2_03
 #define E0_DIR_PIN         P0_22
 #define E0_ENABLE_PIN      P0_21
+#ifndef E0_CS_PIN
+  #define E0_CS_PIN        P1_26
+#endif
 
 #define E1_STEP_PIN        P2_08
 #define E1_DIR_PIN         P2_13
@@ -128,6 +140,14 @@
 #define PIN_P2_12          P2_12
 #define PIN_P2_11          P2_11
 #define PIN_P4_28          P4_28
+
+
+// SPI for Max6675 or Max31855 Thermocouple
+#if DISABLED(SDSUPPORT)
+  #define MAX6675_SS       P0_16 // Do not use pin 53 if there is even the remote possibility of using Display/SD card
+#else
+  #define MAX6675_SS       P0_16 // Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
+#endif
 
 //
 // Prusa i3 MK2 Multi Material Multiplexer Support
