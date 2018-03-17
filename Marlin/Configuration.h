@@ -445,9 +445,9 @@
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
   // JSR 120V 400W silicone heater
-  //#define DEFAULT_Kp 27.8294
-  //#define DEFAULT_Ki 1.2737
-  //#define DEFAULT_Kd 152.0181
+  #define DEFAULT_bedKp 209.3363
+  #define DEFAULT_bedKi 11.3002
+  #define DEFAULT_bedKd 969.4888
 #endif // PIDTEMPBED
 
 // @section extruder

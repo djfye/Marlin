@@ -217,6 +217,15 @@
 #define SD_DETECT_PIN      P0_27
 #define SDSS               P0_06
 
+//
+// Software SPI pins for TMC2130 stepper drivers
+//
+#if ENABLED(TMC_USE_SW_SPI)
+  #define TMC_SW_SCK       P1_22  // J8-2 (moved from EXP2 P0.7)
+  #define TMC_SW_MISO      P1_23  // J8-3 (moved from EXP2 P0.8)
+  #define TMC_SW_MOSI      P2_12  // J8-2 (moved from EXP2 P0.7)
+#endif
+
 /**
  *  PWMs
  *
