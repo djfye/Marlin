@@ -1526,13 +1526,13 @@
         if (isnan(measured_z))
           abort_flag = true;
         else {
-          measured_z -= get_z_correction(UBL_PROBE_PT_1_X, UBL_PROBE_PT_1_Y);
+          measured_z -= get_z_correction(PROBE_PT_1_X, PROBE_PT_1_Y);
           //z1 = measured_z;
           if (g29_verbose_level > 3) {
             serial_spaces(16);
             SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
           }
-          incremental_LSF(&lsf_results, UBL_PROBE_PT_1_X, UBL_PROBE_PT_1_Y, measured_z);
+          incremental_LSF(&lsf_results, PROBE_PT_1_X, PROBE_PT_1_Y, measured_z);
         }
 
         if (!abort_flag) {
@@ -1541,12 +1541,12 @@
           if (isnan(measured_z))
             abort_flag = true;
           else {
-            measured_z -= get_z_correction(UBL_PROBE_PT_2_X, UBL_PROBE_PT_2_Y);
+            measured_z -= get_z_correction(PROBE_PT_2_X, PROBE_PT_2_Y);
             if (g29_verbose_level > 3) {
               serial_spaces(16);
               SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
             }
-            incremental_LSF(&lsf_results, UBL_PROBE_PT_2_X, UBL_PROBE_PT_2_Y, measured_z);
+            incremental_LSF(&lsf_results, PROBE_PT_2_X, PROBE_PT_2_Y, measured_z);
           }
         }
 
@@ -1556,12 +1556,12 @@
           if (isnan(measured_z))
             abort_flag = true;
           else {
-            measured_z -= get_z_correction(UBL_PROBE_PT_3_X, UBL_PROBE_PT_3_Y);
+            measured_z -= get_z_correction(PROBE_PT_3_X, PROBE_PT_3_Y);
             if (g29_verbose_level > 3) {
               serial_spaces(16);
               SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
             }
-            incremental_LSF(&lsf_results, UBL_PROBE_PT_3_X, UBL_PROBE_PT_3_Y, measured_z);
+            incremental_LSF(&lsf_results, PROBE_PT_3_X, PROBE_PT_3_Y, measured_z);
           }
         }
 
@@ -1708,29 +1708,29 @@
            */
           #if 0
           float t, t1, d;
-          t = normal.x * (UBL_PROBE_PT_1_X) + normal.y * (UBL_PROBE_PT_1_Y);
+          t = normal.x * (PROBE_PT_1_X) + normal.y * (PROBE_PT_1_Y);
           d = t + normal.z * z1;
           SERIAL_ECHOPGM("D from 1st point: ");
           SERIAL_ECHO_F(d, 6);
           SERIAL_ECHOPGM("   Z error: ");
-          SERIAL_ECHO_F(normal.z*z1-get_z_correction(UBL_PROBE_PT_1_X, UBL_PROBE_PT_1_Y), 6);
+          SERIAL_ECHO_F(normal.z*z1-get_z_correction(PROBE_PT_1_X, PROBE_PT_1_Y), 6);
           SERIAL_EOL();
 
-          t = normal.x * (UBL_PROBE_PT_2_X) + normal.y * (UBL_PROBE_PT_2_Y);
+          t = normal.x * (PROBE_PT_2_X) + normal.y * (PROBE_PT_2_Y);
           d = t + normal.z * z2;
           SERIAL_EOL();
           SERIAL_ECHOPGM("D from 2nd point: ");
           SERIAL_ECHO_F(d, 6);
           SERIAL_ECHOPGM("   Z error: ");
-          SERIAL_ECHO_F(normal.z*z2-get_z_correction(UBL_PROBE_PT_2_X, UBL_PROBE_PT_2_Y), 6);
+          SERIAL_ECHO_F(normal.z*z2-get_z_correction(PROBE_PT_2_X, PROBE_PT_2_Y), 6);
           SERIAL_EOL();
 
-          t = normal.x * (UBL_PROBE_PT_3_X) + normal.y * (UBL_PROBE_PT_3_Y);
+          t = normal.x * (PROBE_PT_3_X) + normal.y * (PROBE_PT_3_Y);
           d = t + normal.z * z3;
           SERIAL_ECHOPGM("D from 3rd point: ");
           SERIAL_ECHO_F(d, 6);
           SERIAL_ECHOPGM("   Z error: ");
-          SERIAL_ECHO_F(normal.z*z3-get_z_correction(UBL_PROBE_PT_3_X, UBL_PROBE_PT_3_Y), 6);
+          SERIAL_ECHO_F(normal.z*z3-get_z_correction(PROBE_PT_3_X, PROBE_PT_3_Y), 6);
           SERIAL_EOL();
 
           t = normal.x * (Z_SAFE_HOMING_X_POINT) + normal.y * (Z_SAFE_HOMING_Y_POINT);

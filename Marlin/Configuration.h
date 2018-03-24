@@ -1100,9 +1100,6 @@
   #define GRID_MAX_POINTS_X 5
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-  // The Z probe minimum outer margin (to validate G29 parameters).
-  #define MIN_PROBE_EDGE 10
-
   // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
   #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
