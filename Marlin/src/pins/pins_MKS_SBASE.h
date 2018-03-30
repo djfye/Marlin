@@ -100,12 +100,7 @@
 //
 
 #define TEMP_BED_PIN        0  // A0 (TH1)
-
-#if TEMP_SENSOR_0 != (-3 || -2 || -1 || 20 || 1047 || 1010 || 147 || 110)
-  #define TEMP_0_PIN          1  // A1 (TH2)
-#else
-  #define TEMP_0_PIN          P0_16
-#endif
+#define TEMP_0_PIN          5  // A1 (TH2)
 #define TEMP_1_PIN          2  // A2 (TH3)
 #define TEMP_2_PIN          3  // A3 (TH4)
 
@@ -145,14 +140,6 @@
 #define PIN_P2_12          P2_12
 #define PIN_P2_11          P2_11
 #define PIN_P4_28          P4_28
-
-
-// SPI for Max6675 or Max31855 Thermocouple
-#if DISABLED(SDSUPPORT)
-  #define MAX6675_SS       P0_16 // Do not use pin 53 if there is even the remote possibility of using Display/SD card
-#else
-  #define MAX6675_SS       P0_16 // Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
-#endif
 
 //
 // Prusa i3 MK2 Multi Material Multiplexer Support
@@ -226,9 +213,22 @@
 // Software SPI pins for TMC2130 stepper drivers
 //
 #if ENABLED(TMC_USE_SW_SPI)
-  #define TMC_SW_SCK       P1_22  // J8-2 (moved from EXP2 P0.7)
-  #define TMC_SW_MISO      P1_23  // J8-3 (moved from EXP2 P0.8)
-  #define TMC_SW_MOSI      P2_12  // J8-2 (moved from EXP2 P0.7)
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK     P1_22  // J8-2 (moved from EXP2 P0.7)
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO    P1_23  // J8-3 (moved from EXP2 P0.8)
+  #endif
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI    P2_12  // J8-2 (moved from EXP2 P0.7)
+  #endif
+#endif
+
+// SPI for Max6675 or Max31855 Thermocouple
+#if DISABLED(SDSUPPORT)
+  #define MAX6675_SS       P0_16 // J7-5
+#else
+  #define MAX6675_SS       P0_16 // J7-5
 #endif
 
 /**
