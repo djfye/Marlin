@@ -498,22 +498,6 @@ float soft_endstop_min[XYZ] = { X_MIN_BED, Y_MIN_BED, Z_MIN_POS },
 #if !UBL_SEGMENTED
 #if IS_KINEMATIC
 
-  #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
-    #if ENABLED(DELTA)
-      #define ADJUST_DELTA(V) \
-        if (planner.leveling_active) { \
-          const float zadj = bilinear_z_offset(V); \
-          delta[A_AXIS] += zadj; \
-          delta[B_AXIS] += zadj; \
-          delta[C_AXIS] += zadj; \
-        }
-    #else
-      #define ADJUST_DELTA(V) if (planner.leveling_active) { delta[Z_AXIS] += bilinear_z_offset(V); }
-    #endif
-  #else
-    #define ADJUST_DELTA(V) NOOP
-  #endif
-
   #if IS_SCARA
     /**
      * Before raising this value, use M665 S[seg_per_sec] to decrease
@@ -600,7 +584,6 @@ float soft_endstop_min[XYZ] = { X_MIN_BED, Y_MIN_BED, Z_MIN_POS },
     #if DISABLED(SCARA_FEEDRATE_SCALING)
       const float cartesian_segment_mm = cartesian_mm * inv_segments;
     #endif
-
 
     /*
     SERIAL_ECHOPAIR("mm=", cartesian_mm);
