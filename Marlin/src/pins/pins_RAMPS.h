@@ -142,7 +142,11 @@
     #define TMC_SW_MISO    44
   #endif
   #ifndef TMC_SW_SCK
-    #define TMC_SW_SCK     64
+	#if ENABLED(IS_RAMPS_SMART)
+		#define TMC_SW_SCK     59
+	#else
+		#define TMC_SW_SCK     64
+	#endif
   #endif
 #endif
 
