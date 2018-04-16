@@ -1031,7 +1031,7 @@
   #define Z_IS_TMC2130
   //#define Z2_IS_TMC2130
   #define E0_IS_TMC2130
-  //#define E1_IS_TMC2130
+  #define E1_IS_TMC2130
   //#define E2_IS_TMC2130
   //#define E3_IS_TMC2130
   //#define E4_IS_TMC2130
@@ -1056,7 +1056,7 @@
   #define Z_IS_TMC2208
   //#define Z2_IS_TMC2208
   #define E0_IS_TMC2208
-  //#define E1_IS_TMC2208
+  #define E1_IS_TMC2208
   //#define E2_IS_TMC2208
   //#define E3_IS_TMC2208
   //#define E4_IS_TMC2208
@@ -1106,7 +1106,7 @@
    * The default SW SPI pins are defined the respective pins files,
    * but you can override or define them here.
    */
-  //#define TMC_USE_SW_SPI
+  #define TMC_USE_SW_SPI
   //#define TMC_SW_MOSI       -1
   //#define TMC_SW_MISO       -1
   //#define TMC_SW_SCK        -1
