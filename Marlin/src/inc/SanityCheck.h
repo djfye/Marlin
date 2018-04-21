@@ -1478,13 +1478,13 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
     // clearing the stallGuard activated status is found.
     #if ENABLED(DELTA) && !ENABLED(STEALTHCHOP)
       #error "SENSORLESS_HOMING on DELTA currently requires STEALTHCHOP."
-    #elif X_HOME_DIR == -1 && DISABLED(X_MIN_ENDSTOP_INVERTING)
+    #elif X_HOME_DIR == -1 && X_MIN_ENDSTOP_INVERTING != true
       #error "SENSORLESS_HOMING requires X_MIN_ENDSTOP_INVERTING when homing to X_MIN."
-    #elif X_HOME_DIR ==  1 && DISABLED(X_MAX_ENDSTOP_INVERTING)
+    #elif X_HOME_DIR ==  1 && X_MAX_ENDSTOP_INVERTING != true
       #error "SENSORLESS_HOMING requires X_MAX_ENDSTOP_INVERTING when homing to X_MAX."
-    #elif Y_HOME_DIR == -1 && DISABLED(Y_MIN_ENDSTOP_INVERTING)
+    #elif Y_HOME_DIR == -1 && Y_MIN_ENDSTOP_INVERTING != true
       #error "SENSORLESS_HOMING requires Y_MIN_ENDSTOP_INVERTING when homing to Y_MIN."
-    #elif Y_HOME_DIR ==  1 && DISABLED(Y_MAX_ENDSTOP_INVERTING)
+    #elif Y_HOME_DIR ==  1 && Y_MAX_ENDSTOP_INVERTING != true
       #error "SENSORLESS_HOMING requires Y_MAX_ENDSTOP_INVERTING when homing to Y_MAX."
     #endif
   #endif

@@ -543,7 +543,7 @@
 
   #if ENABLED(DELTA_AUTO_CALIBRATION) || ENABLED(DELTA_CALIBRATION_MENU)
     // Set the radius for the calibration probe points - max 0.9 * DELTA_PRINTABLE_RADIUS for non-eccentric probes
-    #define DELTA_CALIBRATION_RADIUS 90.0 // mm
+    #define DELTA_CALIBRATION_RADIUS 100.0 // mm
     // Set the steprate for papertest probing
     #define PROBE_MANUALLY_STEP 0.05 // mm
   #endif
@@ -552,20 +552,20 @@
   #define DELTA_PRINTABLE_RADIUS 110.0 // mm
 
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 320.82 // mm
+  #define DELTA_DIAGONAL_ROD 315.00 // mm
 
   // height from z=0 to home position
-  #define DELTA_HEIGHT 212.27 // get this value from auto calibrate
+  #define DELTA_HEIGHT 210.00 // get this value from auto calibrate
 
-  #define DELTA_ENDSTOP_ADJ { -5.52, -4.42, -6.41 } // get these from auto calibrate
+  #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // get these from auto calibrate
 
   // Horizontal distance bridged by diagonal push rods when effector is centered.
-  #define DELTA_RADIUS 174.34 //mm  Get this value from auto calibrate
+  #define DELTA_RADIUS 173.00 //mm  Get this value from auto calibrate
 
   // Trim adjustments for individual towers
   // tower angle corrections for X and Y tower / rotate XYZ so Z tower angle = 0
   // measured in degrees anticlockwise looking from above the printer
-  #define DELTA_TOWER_ANGLE_TRIM { 0.63, 0.15, 0.0 } // get these values from auto calibrate
+  #define DELTA_TOWER_ANGLE_TRIM { 0.0, 0.0, 0.0 } // get these values from auto calibrate
 
   // delta radius and diaginal rod adjustments measured in mm
   #define DELTA_RADIUS_TRIM_TOWER { 0.0, 0.0, 0.0 }
@@ -658,12 +658,13 @@
 #define XYZ_MICROSTEPS 16
 #define XYZ_BELT_PITCH 2
 #define XYZ_PULLEY_TEETH 20
-#define E_STEPS_DEN 4.6271625
+#define E_STEPS_DEN 29.5180718
 
 // delta speeds must be the same on xyz
-#define E_STEPS (E_STEPS_DEN * XYZ_MICROSTEPS)
+#define E_STEPS ((E_STEPS_DEN) * (XYZ_MICROSTEPS))
+#define E_STEPS_VOL ((E_STEPS_DEN) / 6.3793965 * (XYZ_MICROSTEPS))
 #define DEFAULT_XYZ_STEPS_PER_UNIT ((XYZ_FULL_STEPS_PER_ROTATION) * (XYZ_MICROSTEPS) / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, E_STEPS }   // default steps per unit for PowerWasp
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, E_STEPS_VOL }   // default steps per unit for PowerWasp
 
 /**
  * Default Max Feed Rate (mm/s)
