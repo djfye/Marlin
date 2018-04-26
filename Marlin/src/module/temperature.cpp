@@ -49,6 +49,10 @@
   #include "../feature/filwidth.h"
 #endif
 
+#if ENABLED(EMERGENCY_PARSER)
+  #include "../feature/emergency_parser.h"
+#endif
+
 #if ENABLED(TEMP_SENSOR_1_AS_REDUNDANT)
   static void* heater_ttbl_map[2] = { (void*)HEATER_0_TEMPTABLE, (void*)HEATER_1_TEMPTABLE };
   static uint8_t heater_ttbllen_map[2] = { HEATER_0_TEMPTABLE_LEN, HEATER_1_TEMPTABLE_LEN };
@@ -566,8 +570,11 @@ int Temperature::getHeaterPower(const int heater) {
     HOTEND_LOOP()
       if (current_temperature[e] > EXTRUDER_AUTO_FAN_TEMPERATURE)
         SBI(fanState, pgm_read_byte(&fanBit[e]));
-    if (current_temperature_chamber > EXTRUDER_AUTO_FAN_TEMPERATURE)
-      SBI(fanState, pgm_read_byte(&fanBit[5]));
+
+    #if HAS_TEMP_CHAMBER
+      if (current_temperature_chamber > EXTRUDER_AUTO_FAN_TEMPERATURE)
+        SBI(fanState, pgm_read_byte(&fanBit[5]));
+    #endif
 
     uint8_t fanDone = 0;
     for (uint8_t f = 0; f < COUNT(fanPin); f++) {
@@ -789,7 +796,7 @@ void Temperature::manage_heater() {
   #endif
 
   #if ENABLED(EMERGENCY_PARSER)
-    if (killed_by_M112) kill(PSTR(MSG_KILLED));
+    if (emergency_parser.killed_by_M112) kill(PSTR(MSG_KILLED));
   #endif
 
   if (!temp_meas_ready) return;
