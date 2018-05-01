@@ -80,8 +80,11 @@
 // Temperature Sensors
 //
 #undef TEMP_0_PIN
-#define TEMP_0_PIN          9   // Analog Input
-
+#if TEMP_SENSOR_0 != 20
+  #define TEMP_0_PIN        9   // Analog Input
+#else
+  #define TEMP_0_PIN        3   // Analog Input
+#endif
 #undef TEMP_1_PIN
 #define TEMP_1_PIN         10   // Analog Input
 

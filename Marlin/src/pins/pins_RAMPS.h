@@ -142,11 +142,11 @@
     #define TMC_SW_MISO    44
   #endif
   #ifndef TMC_SW_SCK
-    #if ENABLED(IS_RAMPS_SMART)
-		  #define TMC_SW_SCK     59
-	  #else
-		  #define TMC_SW_SCK     64
-	  #endif
+    #ifdef IS_RAMPS_SMART
+		#define TMC_SW_SCK     59
+	#else
+		#define TMC_SW_SCK     64
+	#endif
   #endif
 #endif
 
@@ -205,7 +205,7 @@
 //
 #if TEMP_SENSOR_0 != 20
   #define TEMP_0_PIN       13   // Analog Input
-#elif TEMP_SENSOR_0 == 20
+#else
   #define TEMP_0_PIN        3   // Analog Input
 #endif
 #define TEMP_1_PIN         15   // Analog Input
