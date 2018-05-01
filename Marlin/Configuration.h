@@ -398,7 +398,7 @@
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
 
-  // FIND YOUR OWN: "M303 E0 C8 S240" to run autotune on the bed at 90 degreesC for 8 cycles.
+  // FIND YOUR OWN: "M303 E0 C8 S240" to run autotune on the hotend at 240 degreesC for 8 cycles.
 
   // Ultibots 24V 40W cartridge heater
   #define DEFAULT_Kp 13.832483
@@ -452,7 +452,7 @@
   //#define DEFAULT_bedKi 1.41
   //#define DEFAULT_bedKd 1675.16
 
-  // FIND YOUR OWN: "M303 E-1 C8 S110" to run autotune on the bed at 90 degreesC for 8 cycles.
+  // FIND YOUR OWN: "M303 E-1 C8 S110" to run autotune on the bed at 110 degreesC for 8 cycles.
 
   // JSR 120V 400W silicone heater
   #define DEFAULT_bedKp 93.211769
@@ -839,10 +839,10 @@
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 3000
 
-// Speed for the first approach when double-probing (MULTIPLE_PROBING == 2)
+// Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 16.666)      //HOMING_FEEDRATE_Z
 
-// Speed for the "accurate" probe of each point
+// Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 4)
 
 // The number of probes to perform at each point.
@@ -1561,6 +1561,15 @@
  * Use CRC checks and retries on the SD communication.
  */
 //#define SD_CHECK_AND_RETRY
+
+/**
+ * LCD Menu Items
+ *
+ * Disable all menus and only display the Status Screen, or
+ * just remove some extraneous menu items to recover space.
+ */
+//#define NO_LCD_MENUS
+//#define SLIM_LCD_MENUS
 
 //
 // ENCODER SETTINGS
