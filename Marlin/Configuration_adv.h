@@ -964,11 +964,11 @@
 #if ENABLED(FWRETRACT)
   #define MIN_AUTORETRACT 0.1             // When auto-retract is on, convert E moves of this length and over
   #define MAX_AUTORETRACT 10.0            // Upper limit for auto-retract conversion
-  #define RETRACT_LENGTH 7.5              // Default retract length (positive mm)
+  #define RETRACT_LENGTH 2.0              // Default retract length (positive mm)
   #define RETRACT_LENGTH_SWAP 13          // Default swap retract length (positive mm), for extruder change
-  #define RETRACT_FEEDRATE 150           // Default feedrate for retracting (mm/s)
+  #define RETRACT_FEEDRATE 150            // Default feedrate for retracting (mm/s)
   #define RETRACT_ZLIFT 0                 // Default retract Z-lift
-  #define RETRACT_RECOVER_LENGTH -0.3     // Default additional recover length (mm, added to retract length when recovering)
+  #define RETRACT_RECOVER_LENGTH 0.0      // Default additional recover length (mm, added to retract length when recovering)
   #define RETRACT_RECOVER_LENGTH_SWAP 0   // Default additional swap recover length (mm, added to retract length when recovering from extruder change)
   #define RETRACT_RECOVER_FEEDRATE 20     // Default feedrate for recovering from retraction (mm/s)
   #define RETRACT_RECOVER_FEEDRATE_SWAP 8 // Default feedrate for recovering from swap retraction (mm/s)
@@ -1044,14 +1044,14 @@
  */
 //#define HAVE_TMC26X
 #if ENABLED(HAVE_TMC26X)  // Choose your axes here. This is mandatory!
-  //#define X_IS_TMC26X
+  #define X_IS_TMC26X
   //#define X2_IS_TMC26X
-  //#define Y_IS_TMC26X
+  #define Y_IS_TMC26X
   //#define Y2_IS_TMC26X
-  //#define Z_IS_TMC26X
+  #define Z_IS_TMC26X
   //#define Z2_IS_TMC26X
-  //#define E0_IS_TMC26X
-  //#define E1_IS_TMC26X
+  #define E0_IS_TMC26X
+  #define E1_IS_TMC26X
   //#define E2_IS_TMC26X
   //#define E3_IS_TMC26X
   //#define E4_IS_TMC26X
@@ -1261,7 +1261,7 @@
    * It is advised to set X/Y/Z_HOME_BUMP_MM to 0.
    * M914 X/Y/Z to live tune the setting
    */
-  #define SENSORLESS_HOMING // TMC2130 only
+  //#define SENSORLESS_HOMING // TMC2130 only
 
   #if ENABLED(SENSORLESS_HOMING)
     #define X_HOMING_SENSITIVITY  3
