@@ -645,14 +645,14 @@
 #define X_DRIVER_TYPE  TMC2130
 #define Y_DRIVER_TYPE  TMC2130
 #define Z_DRIVER_TYPE  TMC2130
-#define X2_DRIVER_TYPE TMC2130
-#define Y2_DRIVER_TYPE TMC2130
-#define Z2_DRIVER_TYPE TMC2130
+//#define X2_DRIVER_TYPE TMC2130
+//#define Y2_DRIVER_TYPE TMC2130
+//#define Z2_DRIVER_TYPE TMC2130
 #define E0_DRIVER_TYPE TMC2130
 #define E1_DRIVER_TYPE TMC2130
-#define E2_DRIVER_TYPE TMC2130
-#define E3_DRIVER_TYPE TMC2130
-#define E4_DRIVER_TYPE TMC2130
+//#define E2_DRIVER_TYPE TMC2130
+//#define E3_DRIVER_TYPE TMC2130
+//#define E4_DRIVER_TYPE TMC2130
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
