@@ -974,11 +974,11 @@
   #define MAX_AUTORETRACT 10.0            // Upper limit for auto-retract conversion
   #define RETRACT_LENGTH 2.0              // Default retract length (positive mm)
   #define RETRACT_LENGTH_SWAP 13          // Default swap retract length (positive mm), for extruder change
-  #define RETRACT_FEEDRATE 150            // Default feedrate for retracting (mm/s)
+  #define RETRACT_FEEDRATE 60             // Default feedrate for retracting (mm/s)
   #define RETRACT_ZLIFT 0                 // Default retract Z-lift
   #define RETRACT_RECOVER_LENGTH 0.0      // Default additional recover length (mm, added to retract length when recovering)
   #define RETRACT_RECOVER_LENGTH_SWAP 0   // Default additional swap recover length (mm, added to retract length when recovering from extruder change)
-  #define RETRACT_RECOVER_FEEDRATE 20     // Default feedrate for recovering from retraction (mm/s)
+  #define RETRACT_RECOVER_FEEDRATE 40     // Default feedrate for recovering from retraction (mm/s)
   #define RETRACT_RECOVER_FEEDRATE_SWAP 8 // Default feedrate for recovering from swap retraction (mm/s)
 #endif
 
@@ -1125,37 +1125,37 @@
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
-  #define X_CURRENT         1200  // rms current in mA. Multiply by 1.41 for peak current.
+  #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
   #define X_MICROSTEPS        16  // 0..256
 
-  #define Y_CURRENT         1200
+  #define Y_CURRENT          800
   #define Y_MICROSTEPS        16
 
-  #define Z_CURRENT         1200
+  #define Z_CURRENT          800
   #define Z_MICROSTEPS        16
 
-  #define X2_CURRENT        1200
+  #define X2_CURRENT         800
   #define X2_MICROSTEPS       16
 
-  #define Y2_CURRENT        1200
+  #define Y2_CURRENT         800
   #define Y2_MICROSTEPS       16
 
-  #define Z2_CURRENT        1200
+  #define Z2_CURRENT         800
   #define Z2_MICROSTEPS       16
 
-  #define E0_CURRENT        1200
+  #define E0_CURRENT         800
   #define E0_MICROSTEPS       16
 
-  #define E1_CURRENT        1200
+  #define E1_CURRENT         800
   #define E1_MICROSTEPS       16
 
-  #define E2_CURRENT        1200
+  #define E2_CURRENT         800
   #define E2_MICROSTEPS       16
 
-  #define E3_CURRENT        1200
+  #define E3_CURRENT         800
   #define E3_MICROSTEPS       16
 
-  #define E4_CURRENT        1200
+  #define E4_CURRENT         800
   #define E4_MICROSTEPS       16
 
   /**
