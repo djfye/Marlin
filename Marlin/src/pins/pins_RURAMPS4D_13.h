@@ -133,7 +133,11 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN          0   // ANALOG A0
+#if TEMP_SENSOR_0 != 20
+  #define TEMP_0_PIN        0   // ANALOG A0
+#else
+  #define TEMP_0_PIN        5   // ANALOG A5
+#endif
 #define TEMP_1_PIN          1   // ANALOG A1
 #define TEMP_2_PIN          2   // ANALOG A2
 #define TEMP_3_PIN          3   // ANALOG A2
@@ -146,11 +150,11 @@
 #endif
 
 // SPI for Max6675 or Max31855 Thermocouple
-//#if DISABLED(SDSUPPORT)
-//  #define MAX6675_SS        53
-//#else
-//  #define MAX6675_SS        49
-//#endif
+#if DISABLED(SDSUPPORT)
+  #define MAX6675_SS        53
+#else
+  #define MAX6675_SS        49
+#endif
 
 //
 // Misc. Functions
@@ -161,11 +165,11 @@
 
 // MKS TFT / Nextion Use internal USART-1
 #define TFT_LCD_MODULE_COM        1
-#define TFT_LCD_MODULE_BAUDRATE   115600
+#define TFT_LCD_MODULE_BAUDRATE   250000
 
 // ESP WiFi Use internal USART-2
 #define ESP_WIFI_MODULE_COM       2
-#define ESP_WIFI_MODULE_BAUDRATE  115600
+#define ESP_WIFI_MODULE_BAUDRATE  250000
 #define ESP_WIFI_MODULE_RESET_PIN -1
 #define PIGGY_GPIO_PIN            -1
 
