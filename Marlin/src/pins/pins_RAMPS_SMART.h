@@ -81,11 +81,17 @@
  */
 #if ENABLED(TMC_USE_SW_SPI)
   #undef TMC_SW_MOSI
-  #define TMC_SW_MOSI    29
   #undef TMC_SW_MISO
-  #define TMC_SW_MISO    31
   #undef TMC_SW_SCK
-  #define TMC_SW_SCK     33
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI    29
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO    31
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK     33
+  #endif
 #endif
 
 //
@@ -118,6 +124,13 @@
 //
 // Support for AZSMZ 12864 LCD with SD Card 3D printer smart controller control panel
 #if ENABLED(AZSMZ_12864)
+  #undef BEEPER_PIN
+  #undef DOGLCD_A0
+  #undef BTN_EN1
+  #undef BTN_EN2
+  #undef BTN_ENC
+  #undef SD_DETECT_PIN
+  #undef KILL_PIN
   #define BEEPER_PIN       66   // Smart RAMPS 1.42 pinout diagram on RepRap WIKI erroneously says this should be pin 65
   #define DOGLCD_A0        59
   #define DOGLCD_CS        44

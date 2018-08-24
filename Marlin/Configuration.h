@@ -562,7 +562,7 @@
   #define DELTA_DIAGONAL_ROD 318.0 // mm
 
   // height from z=0 to home position
-  #define DELTA_HEIGHT 200.00 // get this value from auto calibrate
+  #define DELTA_HEIGHT 205.00 // get this value from auto calibrate
 
   #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // get these from auto calibrate
 
@@ -1062,7 +1062,7 @@
 #endif
 
 // Max software endstops constrain movement within maximum coordinate bounds
-#define MAX_SOFTWARE_ENDSTOPS
+//#define MAX_SOFTWARE_ENDSTOPS
 #if ENABLED(MAX_SOFTWARE_ENDSTOPS)
   #define MAX_SOFTWARE_ENDSTOP_X
   #define MAX_SOFTWARE_ENDSTOP_Y
