@@ -80,9 +80,6 @@
  * Default pins for TMC software SPI
  */
 #if ENABLED(TMC_USE_SW_SPI)
-  #undef TMC_SW_MOSI
-  #undef TMC_SW_MISO
-  #undef TMC_SW_SCK
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI    29
   #endif

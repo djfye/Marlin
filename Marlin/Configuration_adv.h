@@ -411,10 +411,10 @@
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
 #define DEFAULT_STEPPER_DEACTIVE_TIME 120
-#define DISABLE_INACTIVE_X true
-#define DISABLE_INACTIVE_Y true
-#define DISABLE_INACTIVE_Z true  // set to false if the nozzle will fall down on your printed part when print has finished.
-#define DISABLE_INACTIVE_E true
+#define DISABLE_INACTIVE_X false
+#define DISABLE_INACTIVE_Y false
+#define DISABLE_INACTIVE_Z false  // set to false if the nozzle will fall down on your printed part when print has finished.
+#define DISABLE_INACTIVE_E false
 
 #define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
@@ -1130,37 +1130,37 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS        16  // 0..256
+  #define X_MICROSTEPS        32  // 0..256
 
   #define Y_CURRENT          800
-  #define Y_MICROSTEPS        16
+  #define Y_MICROSTEPS        32
 
   #define Z_CURRENT          800
-  #define Z_MICROSTEPS        16
+  #define Z_MICROSTEPS        32
 
   #define X2_CURRENT         800
-  #define X2_MICROSTEPS       16
+  #define X2_MICROSTEPS       32
 
   #define Y2_CURRENT         800
-  #define Y2_MICROSTEPS       16
+  #define Y2_MICROSTEPS       32
 
   #define Z2_CURRENT         800
-  #define Z2_MICROSTEPS       16
+  #define Z2_MICROSTEPS       32
 
   #define E0_CURRENT         800
-  #define E0_MICROSTEPS       16
+  #define E0_MICROSTEPS       32
 
   #define E1_CURRENT         800
-  #define E1_MICROSTEPS       16
+  #define E1_MICROSTEPS       32
 
   #define E2_CURRENT         800
-  #define E2_MICROSTEPS       16
+  #define E2_MICROSTEPS       32
 
   #define E3_CURRENT         800
-  #define E3_MICROSTEPS       16
+  #define E3_MICROSTEPS       32
 
   #define E4_CURRENT         800
-  #define E4_MICROSTEPS       16
+  #define E4_MICROSTEPS       32
 
   /**
    * Use software SPI for TMC2130.
