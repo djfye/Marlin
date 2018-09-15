@@ -1195,7 +1195,7 @@
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
     #define REPORT_CURRENT_CHANGE
-    //#define STOP_ON_ERROR
+    #define STOP_ON_ERROR
   #endif
 
   /**
@@ -1210,8 +1210,8 @@
   #define X2_HYBRID_THRESHOLD     60
   #define Y_HYBRID_THRESHOLD      60
   #define Y2_HYBRID_THRESHOLD     60
-  #define Z_HYBRID_THRESHOLD       3
-  #define Z2_HYBRID_THRESHOLD      3
+  #define Z_HYBRID_THRESHOLD      60
+  #define Z2_HYBRID_THRESHOLD     60
   #define E0_HYBRID_THRESHOLD     30
   #define E1_HYBRID_THRESHOLD     30
   #define E2_HYBRID_THRESHOLD     30
