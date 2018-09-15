@@ -87,9 +87,10 @@ float current_position[XYZE] = { 0 };
  */
 float destination[XYZE] = { 0 };
 
-
 // The active extruder (tool). Set with T<extruder> command.
-uint8_t active_extruder; // = 0;
+#if EXTRUDERS > 1
+  uint8_t active_extruder; // = 0
+#endif
 
 // Extruder offsets
 #if HAS_HOTEND_OFFSET
@@ -1462,7 +1463,7 @@ void homeaxis(const AxisEnum axis) {
 
   // Clear retracted status if homing the Z axis
   #if ENABLED(FWRETRACT)
-    if (axis == Z_AXIS) fwretract.hop_amount = 0.0;
+    if (axis == Z_AXIS) fwretract.current_hop = 0.0;
   #endif
 
   #if ENABLED(DEBUG_LEVELING_FEATURE)
