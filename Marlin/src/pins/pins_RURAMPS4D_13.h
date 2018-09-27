@@ -136,7 +136,7 @@
 #if TEMP_SENSOR_0 != 20
   #define TEMP_0_PIN        0   // ANALOG A0
 #else
-  #define TEMP_0_PIN       11   // ANALOG A5
+  #define TEMP_0_PIN       11   // ANALOG A11
 #endif
 #define TEMP_1_PIN          1   // ANALOG A1
 #define TEMP_2_PIN          2   // ANALOG A2
