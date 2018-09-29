@@ -90,11 +90,7 @@
 // 3.3V max when defined as an analog input
 //
 #define TEMP_BED_PIN        0   // A0 (TH1)
-#if TEMP_SENSOR_0 != 20
-  #define TEMP_0_PIN        1   // A1 (TH2)
-#else
-  #define TEMP_0_PIN        7   // A5
-#endif
+#define TEMP_0_PIN          1   // A1 (TH2)
 #define TEMP_1_PIN          2   // A2 (TH3)
 #define TEMP_2_PIN          3   // A3 (TH4)
 
@@ -198,13 +194,6 @@
 #define SS_PIN             P0_28
 #define SDSS               P0_06
 
-// SPI for Max6675 or Max31855 Thermocouple
-#if DISABLED(SDSUPPORT)
-  #define MAX6675_SS       P0_16 // J7-5
-#else
-  #define MAX6675_SS       P0_16 // J7-5
-#endif
-
 /**
  * Example for trinamic drivers using the J8 connector on MKs Sbase.
  * 2130s need 1 pin for each driver. 2208s need 2 pins for serial control.
@@ -234,7 +223,6 @@
   #endif
  #endif
 #endif
-
 #if HAS_DRIVER(TMC2208)
   // The shortage of pins becomes apparent.
   // Worst case you may have to give up the LCD

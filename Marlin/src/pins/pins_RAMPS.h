@@ -99,53 +99,50 @@
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55
 #define X_ENABLE_PIN       38
+#ifndef X_CS_PIN
+  #define X_CS_PIN         53
+#endif
 
 #define Y_STEP_PIN         60
 #define Y_DIR_PIN          61
 #define Y_ENABLE_PIN       56
+#ifndef Y_CS_PIN
+  #define Y_CS_PIN         49
+#endif
 
 #define Z_STEP_PIN         46
 #define Z_DIR_PIN          48
 #define Z_ENABLE_PIN       62
+#ifndef Z_CS_PIN
+  #define Z_CS_PIN         40
+#endif
 
 #define E0_STEP_PIN        26
 #define E0_DIR_PIN         28
 #define E0_ENABLE_PIN      24
+#ifndef E0_CS_PIN
+  #define E0_CS_PIN        42
+#endif
 
 #define E1_STEP_PIN        36
 #define E1_DIR_PIN         34
 #define E1_ENABLE_PIN      30
+#ifndef E1_CS_PIN
+  #define E1_CS_PIN        44
+#endif
 
 /**
  * Default pins for TMC software SPI
  */
 #if ENABLED(TMC_USE_SW_SPI)
-  #ifndef IS_RAMPS_SMART
-    #ifndef TMC_SW_MOSI
-      #define TMC_SW_MOSI    66
-    #endif
-    #ifndef TMC_SW_MISO
-      #define TMC_SW_MISO    44
-    #endif
-      #ifndef TMC_SW_SCK
-      #define TMC_SW_SCK     64
-    #endif
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI    66
   #endif
-#endif
-
-#if HAS_DRIVER(TMC2130)
-  #ifndef IS_RAMPS_SMART
-    #define X_CS_PIN         53
-    #define Y_CS_PIN         49
-    #define Z_CS_PIN         40
-    #define E0_CS_PIN        42
-    #define E1_CS_PIN        44
-  #else
-    #define X_CS_PIN         23
-    #define Y_CS_PIN         25
-    #define Z_CS_PIN         27
-    #define E0_CS_PIN        29
-    #define E1_CS_PIN        31
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO    44
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK     64
   #endif
 #endif
 
@@ -202,27 +199,15 @@
 //
 // Temperature Sensors
 //
-#if TEMP_SENSOR_0 != 20
-  #define TEMP_0_PIN       13   // Analog Input
-#else
-  #define TEMP_0_PIN        3   // Analog Input
-#endif
+#define TEMP_0_PIN         13   // Analog Input
 #define TEMP_1_PIN         15   // Analog Input
 #define TEMP_BED_PIN       14   // Analog Input
 
 // SPI for Max6675 or Max31855 Thermocouple
 #if DISABLED(SDSUPPORT)
-  #ifndef IS_RAMPS_SMART
-    #define MAX6675_SS       66   // Do not use pin 53 if there is even the remote possibility of using Display/SD card
-  #else
-    #define MAX6675_SS       38   // Do not use pin 53 if there is even the remote possibility of using Display/SD card
-  #endif
+  #define MAX6675_SS       66   // Do not use pin 53 if there is even the remote possibility of using Display/SD card
 #else
-  #ifndef IS_RAMPS_SMART
-    #define MAX6675_SS       66   // Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
-  #else
-    #define MAX6675_SS       38   // Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
-  #endif
+  #define MAX6675_SS       66   // Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
 #endif
 
 //
