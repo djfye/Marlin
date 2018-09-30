@@ -1194,7 +1194,7 @@
   #define E4_MICROSTEPS       32
 
   #define E5_CURRENT         800
-  #define E5_MICROSTEPS       16
+  #define E5_MICROSTEPS       32
 
   /**
    * Use software SPI for TMC2130.
@@ -1245,7 +1245,7 @@
   #define Y2_HYBRID_THRESHOLD     60
   #define Z_HYBRID_THRESHOLD      60
   #define Z2_HYBRID_THRESHOLD     60
-  #define Z3_HYBRID_THRESHOLD      3
+  #define Z3_HYBRID_THRESHOLD     60
   #define E0_HYBRID_THRESHOLD     30
   #define E1_HYBRID_THRESHOLD     30
   #define E2_HYBRID_THRESHOLD     30
