@@ -114,7 +114,7 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#define SERIAL_PORT_2 1
+#define SERIAL_PORT_2 2
 
 /**
  * This setting determines the communication speed of the printer.
@@ -722,7 +722,7 @@
  */
 // variables to calculate steps
 #define XYZ_FULL_STEPS_PER_ROTATION 400
-#define XYZ_MICROSTEPS 32
+#define XYZ_MICROSTEPS 256
 #define XYZ_BELT_PITCH 2
 #define XYZ_PULLEY_TEETH 20
 #define E_STEPS_DEN 56.4320375

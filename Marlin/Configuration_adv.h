@@ -196,10 +196,10 @@
  * The fan will turn on automatically whenever any stepper is enabled
  * and turn off after a set period after all steppers are turned off.
  */
-//#define USE_CONTROLLER_FAN
+#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
   //#define CONTROLLER_FAN_PIN -1        // Set a custom pin for the controller fan
-  #define CONTROLLERFAN_SECS 60          // Duration in seconds for the fan to run after all motors are disabled
+  #define CONTROLLERFAN_SECS 180         // Duration in seconds for the fan to run after all motors are disabled
   #define CONTROLLERFAN_SPEED 255        // 255 == full speed
 #endif
 
@@ -237,14 +237,14 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN  6   // BED H2
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
 #define E4_AUTO_FAN_PIN -1
 #define E5_AUTO_FAN_PIN -1
 #define CHAMBER_AUTO_FAN_PIN -1
-#define EXTRUDER_AUTO_FAN_TEMPERATURE 50
+#define EXTRUDER_AUTO_FAN_TEMPERATURE 60
 #define EXTRUDER_AUTO_FAN_SPEED   255  // == full speed
 
 /**
@@ -429,7 +429,7 @@
 // Default stepper release if idle. Set to 0 to deactivate.
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
-#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+#define DEFAULT_STEPPER_DEACTIVE_TIME 0
 #define DISABLE_INACTIVE_X false
 #define DISABLE_INACTIVE_Y false
 #define DISABLE_INACTIVE_Z false  // set to false if the nozzle will fall down on your printed part when print has finished.
@@ -1173,46 +1173,46 @@
 
   #define R_SENSE           0.11  // R_sense resistor for SilentStepStick2130
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
+  #define INTERPOLATE      false  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS        32  // 0..256
+  #define X_MICROSTEPS       256  // 0..256
 
   #define Y_CURRENT          800
-  #define Y_MICROSTEPS        32
+  #define Y_MICROSTEPS       256
 
   #define Z_CURRENT          800
-  #define Z_MICROSTEPS        32
+  #define Z_MICROSTEPS       256
 
   #define X2_CURRENT         800
-  #define X2_MICROSTEPS       32
+  #define X2_MICROSTEPS      256
 
   #define Y2_CURRENT         800
-  #define Y2_MICROSTEPS       32
+  #define Y2_MICROSTEPS      256
 
   #define Z2_CURRENT         800
-  #define Z2_MICROSTEPS       32
+  #define Z2_MICROSTEPS      256
 
   #define Z3_CURRENT         800
-  #define Z3_MICROSTEPS       32
+  #define Z3_MICROSTEPS      256
 
   #define E0_CURRENT         800
-  #define E0_MICROSTEPS       32
+  #define E0_MICROSTEPS      256
 
   #define E1_CURRENT         800
-  #define E1_MICROSTEPS       32
+  #define E1_MICROSTEPS      256
 
   #define E2_CURRENT         800
-  #define E2_MICROSTEPS       32
+  #define E2_MICROSTEPS      256
 
   #define E3_CURRENT         800
-  #define E3_MICROSTEPS       32
+  #define E3_MICROSTEPS      256
 
   #define E4_CURRENT         800
-  #define E4_MICROSTEPS       32
+  #define E4_MICROSTEPS      256
 
   #define E5_CURRENT         800
-  #define E5_MICROSTEPS       32
+  #define E5_MICROSTEPS      256
 
   /**
    * Use software SPI for TMC2130.
@@ -1228,7 +1228,7 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  #define STEALTHCHOP
+  //#define STEALTHCHOP
 
   /**
    * Monitor Trinamic TMC2130 and TMC2208 drivers for error conditions,
@@ -1255,7 +1255,7 @@
    * STEALTHCHOP needs to be enabled.
    * M913 X/Y/Z/E to live tune the setting
    */
-  #define HYBRID_THRESHOLD
+  //#define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD      50  // [mm/s]
   #define X2_HYBRID_THRESHOLD     50
@@ -1333,9 +1333,7 @@
    *   stepperY.interpolate(0); \
    * }
    */
-  #define TMC_ADV() { stepperE0.stealthChop(0); \
-                      stepperE0.chopper_mode(0); \
-                    }
+  #define TMC_ADV() {  }
 
 #endif // TMC2130 || TMC2208
 
