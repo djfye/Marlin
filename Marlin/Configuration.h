@@ -592,7 +592,7 @@
   #define DELTA_PRINTABLE_RADIUS 110.0 // mm
 
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 318.0 // mm
+  #define DELTA_DIAGONAL_ROD 315.0 // mm
 
   // height from z=0 to home position
   #define DELTA_HEIGHT 205.00 // get this value from auto calibrate
@@ -736,7 +736,7 @@
  */
 // variables to calculate steps
 #define XYZ_FULL_STEPS_PER_ROTATION 400
-#define XYZ_MICROSTEPS 256
+#define XYZ_MICROSTEPS 32
 #define XYZ_BELT_PITCH 2
 #define XYZ_PULLEY_TEETH 20
 #define E_STEPS_DEN 56.4320375

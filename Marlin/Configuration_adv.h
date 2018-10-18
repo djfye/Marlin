@@ -934,7 +934,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 1
+#define MINIMUM_STEPPER_PULSE 2
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1207,46 +1207,46 @@
 
   #define R_SENSE           0.11  // R_sense resistor for SilentStepStick2130
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE      false  // Interpolate X/Y/Z_MICROSTEPS to 256
+  #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS       256  // 0..256
+  #define X_MICROSTEPS        32  // 0..256
 
   #define Y_CURRENT          800
-  #define Y_MICROSTEPS       256
+  #define Y_MICROSTEPS        32
 
   #define Z_CURRENT          800
-  #define Z_MICROSTEPS       256
+  #define Z_MICROSTEPS        32
 
   #define X2_CURRENT         800
-  #define X2_MICROSTEPS      256
+  #define X2_MICROSTEPS       32
 
   #define Y2_CURRENT         800
-  #define Y2_MICROSTEPS      256
+  #define Y2_MICROSTEPS       32
 
   #define Z2_CURRENT         800
-  #define Z2_MICROSTEPS      256
+  #define Z2_MICROSTEPS       32
 
   #define Z3_CURRENT         800
-  #define Z3_MICROSTEPS      256
+  #define Z3_MICROSTEPS       32
 
   #define E0_CURRENT         800
-  #define E0_MICROSTEPS      256
+  #define E0_MICROSTEPS       32
 
   #define E1_CURRENT         800
-  #define E1_MICROSTEPS      256
+  #define E1_MICROSTEPS       32
 
   #define E2_CURRENT         800
-  #define E2_MICROSTEPS      256
+  #define E2_MICROSTEPS       32
 
   #define E3_CURRENT         800
-  #define E3_MICROSTEPS      256
+  #define E3_MICROSTEPS       32
 
   #define E4_CURRENT         800
-  #define E4_MICROSTEPS      256
+  #define E4_MICROSTEPS       32
 
   #define E5_CURRENT         800
-  #define E5_MICROSTEPS      256
+  #define E5_MICROSTEPS       32
 
   /**
    * Use software SPI for TMC2130.
@@ -1262,7 +1262,7 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  //#define STEALTHCHOP
+  #define STEALTHCHOP
 
   /**
    * Monitor Trinamic TMC2130 and TMC2208 drivers for error conditions,
@@ -1289,7 +1289,7 @@
    * STEALTHCHOP needs to be enabled.
    * M913 X/Y/Z/E to live tune the setting
    */
-  //#define HYBRID_THRESHOLD
+  #define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD      50  // [mm/s]
   #define X2_HYBRID_THRESHOLD     50
