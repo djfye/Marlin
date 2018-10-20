@@ -40,6 +40,10 @@
 //=============================Thermal Settings  ============================
 //===========================================================================
 
+#define HEATER_BED_INVERTING true
+#define HEATER_0_INVERTING true
+#define HEATER_1_INVERTING true
+
 //
 // Hephestos 2 24V heated bed upgrade kit.
 // https://store.bq.com/en/heated-bed-kit-hephestos2
@@ -75,8 +79,8 @@
  * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 50        // Seconds
-  #define THERMAL_PROTECTION_HYSTERESIS 6     // Degrees Celsius
+  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
   /**
    * Whenever an M104, M109, or M303 increases the target temperature, the
@@ -90,7 +94,7 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-  #define WATCH_TEMP_PERIOD 40                // Seconds
+  #define WATCH_TEMP_PERIOD 20                // Seconds
   #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -98,13 +102,13 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD 11    // Seconds
-  #define THERMAL_PROTECTION_BED_HYSTERESIS 4 // Degrees Celsius
+  #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD 100               // Seconds
+  #define WATCH_BED_TEMP_PERIOD 60                // Seconds
   #define WATCH_BED_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -196,10 +200,10 @@
  * The fan will turn on automatically whenever any stepper is enabled
  * and turn off after a set period after all steppers are turned off.
  */
-#define USE_CONTROLLER_FAN
+//#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
   //#define CONTROLLER_FAN_PIN -1        // Set a custom pin for the controller fan
-  #define CONTROLLERFAN_SECS 180         // Duration in seconds for the fan to run after all motors are disabled
+  #define CONTROLLERFAN_SECS 60          // Duration in seconds for the fan to run after all motors are disabled
   #define CONTROLLERFAN_SPEED 255        // 255 == full speed
 #endif
 
@@ -237,14 +241,14 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN  6   // BED H2
+#define E0_AUTO_FAN_PIN -1
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
 #define E4_AUTO_FAN_PIN -1
 #define E5_AUTO_FAN_PIN -1
 #define CHAMBER_AUTO_FAN_PIN -1
-#define EXTRUDER_AUTO_FAN_TEMPERATURE 60
+#define EXTRUDER_AUTO_FAN_TEMPERATURE 50
 #define EXTRUDER_AUTO_FAN_SPEED 255   // 255 == full speed
 
 /**
@@ -345,8 +349,8 @@
   #if ENABLED(Z_TRIPLE_ENDSTOPS)
     #define Z2_USE_ENDSTOP _XMAX_
     #define Z3_USE_ENDSTOP _YMAX_
-    #define Z_TRIPLE2_ENDSTOPS_ADJUSTMENT  0
-    #define Z_TRIPLE3_ENDSTOPS_ADJUSTMENT  0
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT2  0
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT3  0
   #endif
 #endif
 
@@ -399,7 +403,7 @@
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
-#define Z_HOME_BUMP_MM 5 // deltas need the same for all three axes
+#define Z_HOME_BUMP_MM 2
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 
@@ -425,11 +429,11 @@
 // Default stepper release if idle. Set to 0 to deactivate.
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
-#define DEFAULT_STEPPER_DEACTIVE_TIME 0
-#define DISABLE_INACTIVE_X false
-#define DISABLE_INACTIVE_Y false
-#define DISABLE_INACTIVE_Z false  // set to false if the nozzle will fall down on your printed part when print has finished.
-#define DISABLE_INACTIVE_E false
+#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+#define DISABLE_INACTIVE_X true
+#define DISABLE_INACTIVE_Y true
+#define DISABLE_INACTIVE_Z true  // set to false if the nozzle will fall down on your printed part when print has finished.
+#define DISABLE_INACTIVE_E true
 
 #define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
@@ -439,8 +443,7 @@
 // @section lcd
 
 #if ENABLED(ULTIPANEL)
-  #define MANUAL_FEEDRATE_XYZ 50*60
-  #define MANUAL_FEEDRATE { MANUAL_FEEDRATE_XYZ, MANUAL_FEEDRATE_XYZ, MANUAL_FEEDRATE_XYZ, 60 } // Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE {50*60, 50*60, 4*60, 60} // Feedrates for manual moves along X, Y, Z, E from panel
   #define MANUAL_E_MOVES_RELATIVE // Show LCD extruder moves as relative rather than absolute positions
   #define ULTIPANEL_FEEDMULTIPLY  // Comment to disable setting feedrate multiplier via encoder
 #endif
@@ -451,8 +454,7 @@
 #define DEFAULT_MINSEGMENTTIME        20000
 
 // If defined the movements slow down when the look ahead buffer is only half full
-// (don't use SLOWDOWN with DELTA because DELTA generates hundreds of segments per second)
-//#define SLOWDOWN
+#define SLOWDOWN
 
 // Frequency limit
 // See nophead's blog for more info
@@ -467,9 +469,9 @@
 //
 // Use Junction Deviation instead of traditional Jerk Limiting
 //
-#define JUNCTION_DEVIATION
+//#define JUNCTION_DEVIATION
 #if ENABLED(JUNCTION_DEVIATION)
-  #define JUNCTION_DEVIATION_MM 0.1   // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.02  // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -524,10 +526,10 @@
 #endif
 
 //#define DIGIPOT_MCP4018          // Requires library from https://github.com/stawel/SlowSoftI2CMaster
-#define DIGIPOT_I2C_NUM_CHANNELS 5 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
+#define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
 // Actual motor currents in Amps. The number of entries must match DIGIPOT_I2C_NUM_CHANNELS.
 // These correspond to the physical drivers, so be mindful if the order is changed.
-#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.68, 1.68, 1.68, 1.5, 1.5 }  //  MKS SBASE: 5
+#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }  //  AZTEEG_X3_PRO
 
 //===========================================================================
 //=============================Additional Features===========================
@@ -755,18 +757,18 @@
   //#define OVERLAY_GFX_REVERSE
 
   #if ENABLED(U8GLIB_ST7920)
-  /**
-   * ST7920-based LCDs can emulate a 16 x 4 character display using
-   * the ST7920 character-generator for very fast screen updates.
-   * Enable LIGHTWEIGHT_UI to use this special display mode.
-   *
-   * Since LIGHTWEIGHT_UI has limited space, the position and status
-   * message occupy the same line. Set STATUS_EXPIRE_SECONDS to the
-   * length of time to display the status message before clearing.
-   *
-   * Set STATUS_EXPIRE_SECONDS to zero to never clear the status.
-   * This will prevent position updates from being displayed.
-   */
+    /**
+     * ST7920-based LCDs can emulate a 16 x 4 character display using
+     * the ST7920 character-generator for very fast screen updates.
+     * Enable LIGHTWEIGHT_UI to use this special display mode.
+     *
+     * Since LIGHTWEIGHT_UI has limited space, the position and status
+     * message occupy the same line. Set STATUS_EXPIRE_SECONDS to the
+     * length of time to display the status message before clearing.
+     *
+     * Set STATUS_EXPIRE_SECONDS to zero to never clear the status.
+     * This will prevent position updates from being displayed.
+     */
     //#define LIGHTWEIGHT_UI
     #if ENABLED(LIGHTWEIGHT_UI)
       #define STATUS_EXPIRE_SECONDS 20
@@ -797,13 +799,13 @@
  *
  * Warning: Does not respect endstops!
  */
-#define BABYSTEPPING
+//#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
   #define BABYSTEP_MULTIPLICATOR  1         // Babysteps are very small. Increase for faster motion.
 
-  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -814,10 +816,10 @@
     #define MOVE_Z_IDLE_MULTIPLICATOR 1     // Multiply 1mm by this factor for the move step size.
   #endif
 
-  #define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
+  //#define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
-    #define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
+    //#define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
   #endif
 #endif
 
@@ -839,9 +841,9 @@
  * See http://marlinfw.org/docs/features/lin_advance.html for full instructions.
  * Mention @Sebastianv650 on GitHub to alert the author of any issues.
  */
-#define LIN_ADVANCE
+//#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
-  #define LIN_ADVANCE_K 0.00  // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.22  // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG          // If enabled, this will generate debug information output over USB.
 #endif
 
@@ -918,7 +920,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_DIR_DELAY 20
+//#define MINIMUM_STEPPER_DIR_DELAY 650
 
 /**
  * Minimum stepper driver pulse width (in µs)
@@ -930,7 +932,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-#define MINIMUM_STEPPER_PULSE 2
+//#define MINIMUM_STEPPER_PULSE 2
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1020,15 +1022,6 @@
 // @section extras
 
 /**
- * Extra Fan Speed
- * Adds a secondary fan speed for each print-cooling fan.
- *   'M106 P<fan> T3-255' : Set a secondary speed for <fan>
- *   'M106 P<fan> T2'     : Use the set secondary speed
- *   'M106 P<fan> T1'     : Restore the previous fan speed
- */
-//#define EXTRA_FAN_SPEED
-
-/**
  * Firmware-based and LCD-controlled retract
  *
  * Add G10 / G11 commands for automatic firmware-based retract / recover.
@@ -1043,25 +1036,34 @@
  * Note that M207 / M208 / M209 settings are saved to EEPROM.
  *
  */
-#define FWRETRACT
+//#define FWRETRACT
 #if ENABLED(FWRETRACT)
-  //#define FWRETRACT_AUTORETRACT           // costs ~500 bytes of PROGMEM
+  #define FWRETRACT_AUTORETRACT           // costs ~500 bytes of PROGMEM
   #if ENABLED(FWRETRACT_AUTORETRACT)
     #define MIN_AUTORETRACT 0.1           // When auto-retract is on, convert E moves of this length and over
     #define MAX_AUTORETRACT 10.0          // Upper limit for auto-retract conversion
   #endif
-  #define RETRACT_LENGTH 2.0              // Default retract length (positive mm)
+  #define RETRACT_LENGTH 3                // Default retract length (positive mm)
   #define RETRACT_LENGTH_SWAP 13          // Default swap retract length (positive mm), for extruder change
-  #define RETRACT_FEEDRATE 60             // Default feedrate for retracting (mm/s)
+  #define RETRACT_FEEDRATE 45             // Default feedrate for retracting (mm/s)
   #define RETRACT_ZRAISE 0                // Default retract Z-raise (mm)
   #define RETRACT_RECOVER_LENGTH 0        // Default additional recover length (mm, added to retract length when recovering)
   #define RETRACT_RECOVER_LENGTH_SWAP 0   // Default additional swap recover length (mm, added to retract length when recovering from extruder change)
-  #define RETRACT_RECOVER_FEEDRATE 40     // Default feedrate for recovering from retraction (mm/s)
+  #define RETRACT_RECOVER_FEEDRATE 8      // Default feedrate for recovering from retraction (mm/s)
   #define RETRACT_RECOVER_FEEDRATE_SWAP 8 // Default feedrate for recovering from swap retraction (mm/s)
   #if ENABLED(MIXING_EXTRUDER)
     //#define RETRACT_SYNC_MIXING         // Retract and restore all mixing steppers simultaneously
   #endif
 #endif
+
+/**
+ * Extra Fan Speed
+ * Adds a secondary fan speed for each print-cooling fan.
+ *   'M106 P<fan> T3-255' : Set a secondary speed for <fan>
+ *   'M106 P<fan> T2'     : Use the set secondary speed
+ *   'M106 P<fan> T1'     : Restore the previous fan speed
+ */
+//#define EXTRA_FAN_SPEED
 
 /**
  * Advanced Pause
@@ -1112,6 +1114,7 @@
   //#define HOME_BEFORE_FILAMENT_CHANGE           // Ensure homing has been completed prior to parking for filament change
 
   //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
+
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 
@@ -1206,43 +1209,43 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS        32  // 0..256
+  #define X_MICROSTEPS        16  // 0..256
 
   #define Y_CURRENT          800
-  #define Y_MICROSTEPS        32
+  #define Y_MICROSTEPS        16
 
   #define Z_CURRENT          800
-  #define Z_MICROSTEPS        32
+  #define Z_MICROSTEPS        16
 
   #define X2_CURRENT         800
-  #define X2_MICROSTEPS       32
+  #define X2_MICROSTEPS       16
 
   #define Y2_CURRENT         800
-  #define Y2_MICROSTEPS       32
+  #define Y2_MICROSTEPS       16
 
   #define Z2_CURRENT         800
-  #define Z2_MICROSTEPS       32
+  #define Z2_MICROSTEPS       16
 
   #define Z3_CURRENT         800
-  #define Z3_MICROSTEPS       32
+  #define Z3_MICROSTEPS       16
 
   #define E0_CURRENT         800
-  #define E0_MICROSTEPS       32
+  #define E0_MICROSTEPS       16
 
   #define E1_CURRENT         800
-  #define E1_MICROSTEPS       32
+  #define E1_MICROSTEPS       16
 
   #define E2_CURRENT         800
-  #define E2_MICROSTEPS       32
+  #define E2_MICROSTEPS       16
 
   #define E3_CURRENT         800
-  #define E3_MICROSTEPS       32
+  #define E3_MICROSTEPS       16
 
   #define E4_CURRENT         800
-  #define E4_MICROSTEPS       32
+  #define E4_MICROSTEPS       16
 
   #define E5_CURRENT         800
-  #define E5_MICROSTEPS       32
+  #define E5_MICROSTEPS       16
 
   /**
    * Use software SPI for TMC2130.
@@ -1271,7 +1274,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 S0/1 - Report driver parameters (Requires TMC_DEBUG)
    */
-  #define MONITOR_DRIVER_STATUS
+  //#define MONITOR_DRIVER_STATUS
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -1285,21 +1288,21 @@
    * STEALTHCHOP needs to be enabled.
    * M913 X/Y/Z/E to live tune the setting
    */
-  #define HYBRID_THRESHOLD
+  //#define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD      50  // [mm/s]
-  #define X2_HYBRID_THRESHOLD     50
-  #define Y_HYBRID_THRESHOLD      50
-  #define Y2_HYBRID_THRESHOLD     50
-  #define Z_HYBRID_THRESHOLD      50
-  #define Z2_HYBRID_THRESHOLD     50
-  #define Z3_HYBRID_THRESHOLD     50
-  #define E0_HYBRID_THRESHOLD     10
-  #define E1_HYBRID_THRESHOLD     10
-  #define E2_HYBRID_THRESHOLD     10
-  #define E3_HYBRID_THRESHOLD     10
-  #define E4_HYBRID_THRESHOLD     10
-  #define E5_HYBRID_THRESHOLD     10
+  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  #define X2_HYBRID_THRESHOLD    100
+  #define Y_HYBRID_THRESHOLD     100
+  #define Y2_HYBRID_THRESHOLD    100
+  #define Z_HYBRID_THRESHOLD       3
+  #define Z2_HYBRID_THRESHOLD      3
+  #define Z3_HYBRID_THRESHOLD      3
+  #define E0_HYBRID_THRESHOLD     30
+  #define E1_HYBRID_THRESHOLD     30
+  #define E2_HYBRID_THRESHOLD     30
+  #define E3_HYBRID_THRESHOLD     30
+  #define E4_HYBRID_THRESHOLD     30
+  #define E5_HYBRID_THRESHOLD     30
 
   /**
    * Use StallGuard2 to sense an obstacle and trigger an endstop.
@@ -1324,16 +1327,16 @@
   //#define SENSORLESS_PROBING // TMC2130 only
 
   #if ENABLED(SENSORLESS_HOMING) || ENABLED(SENSORLESS_PROBING)
-    #define X_STALL_SENSITIVITY  3
-    #define Y_STALL_SENSITIVITY  3
-    #define Z_STALL_SENSITIVITY  3
+    #define X_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  8
+    //#define Z_STALL_SENSITIVITY  8
   #endif
 
   /**
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continous reporting.
    */
-  #define TMC_DEBUG
+  //#define TMC_DEBUG
 
   /**
    * M915 Z Axis Calibration
@@ -1365,7 +1368,7 @@
    */
   #define TMC_ADV() {  }
 
-#endif // TMC2130 || TMC2208
+#endif // HAS_TRINAMIC
 
 // @section L6470
 
@@ -1557,7 +1560,7 @@
 /**
  * M43 - display pin status, watch pins for changes, watch endstops & toggle LED, Z servo probe test, toggle pins
  */
-#define PINS_DEBUGGING
+//#define PINS_DEBUGGING
 
 /**
  * Auto-report temperatures with M155 S<seconds>
@@ -1643,8 +1646,8 @@
   #define USER_DESC_4 "Heat Bed/Home/Level"
   #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
-  //#define USER_DESC_5 "Home & Info"
-  //#define USER_GCODE_5 "G28\nM503"
+  #define USER_DESC_5 "Home & Info"
+  #define USER_GCODE_5 "G28\nM503"
 #endif
 
 /**
