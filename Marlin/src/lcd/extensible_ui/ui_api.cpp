@@ -1,3 +1,25 @@
+/**
+ * Marlin 3D Printer Firmware
+ * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ *
+ * Based on Sprinter and grbl.
+ * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 /**************
  * ui_api.cpp *
  **************/
@@ -29,6 +51,7 @@
 #include "../../module/probe.h"
 #include "../../module/temperature.h"
 #include "../../libs/duration_t.h"
+#include "../../HAL/shared/Delay.h"
 
 #if DO_SWITCH_EXTRUDER || ENABLED(SWITCHING_NOZZLE) || ENABLED(PARKING_EXTRUDER)
   #include "../../module/tool_change.h"
@@ -37,6 +60,9 @@
 #if ENABLED(SDSUPPORT)
   #include "../../sd/cardreader.h"
   #include "../../feature/emergency_parser.h"
+  #define IFSD(A,B) (A)
+#else
+  #define IFSD(A,B) (B)
 #endif
 
 #if ENABLED(PRINTCOUNTER)
@@ -61,14 +87,70 @@ inline float clamp(const float value, const float minimum, const float maximum) 
   return MAX(MIN(value, maximum), minimum);
 }
 
+static bool printer_killed = false;
+
 namespace UI {
+  #ifdef __SAM3X8E__
+    /**
+     * Implement a special millis() to allow time measurement
+     * within an ISR (such as when the printer is killed).
+     *
+     * To keep proper time, must be called at least every 1s.
+     */
+    uint32_t safe_millis() {
+      // Not killed? Just call millis()
+      if (!printer_killed) return millis();
+
+      static uint32_t currTimeHI = 0; /* Current time */
+
+      // Machine was killed, reinit SysTick so we are able to compute time without ISRs
+      if (currTimeHI == 0) {
+        // Get the last time the Arduino time computed (from CMSIS) and convert it to SysTick
+        currTimeHI = (uint32_t)((GetTickCount() * (uint64_t)(F_CPU/8000)) >> 24);
+
+        // Reinit the SysTick timer to maximize its period
+        SysTick->LOAD  = SysTick_LOAD_RELOAD_Msk;                    // get the full range for the systick timer
+        SysTick->VAL   = 0;                                          // Load the SysTick Counter Value
+        SysTick->CTRL  = // MCLK/8 as source
+                         // No interrupts
+                         SysTick_CTRL_ENABLE_Msk;                    // Enable SysTick Timer
+     }
+
+      // Check if there was a timer overflow from the last read
+      if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) {
+        // There was. This means (SysTick_LOAD_RELOAD_Msk * 1000 * 8)/F_CPU ms has elapsed
+        currTimeHI++;
+      }
+
+      // Calculate current time in milliseconds
+      uint32_t currTimeLO = SysTick_LOAD_RELOAD_Msk - SysTick->VAL; // (in MCLK/8)
+      uint64_t currTime = ((uint64_t)currTimeLO) | (((uint64_t)currTimeHI) << 24);
+
+      // The ms count is
+      return (uint32_t)(currTime / (F_CPU / 8000));
+    }
+
+  #else
+
+    // TODO: Implement for AVR
+    uint32_t safe_millis() { return millis(); }
+
+  #endif
+
+  void delay_us(unsigned long us) {
+    DELAY_US(us);
+  }
 
   void delay_ms(unsigned long ms) {
-    safe_delay(ms);
+    if (printer_killed)
+      DELAY_US(ms * 1000);
+    else
+      safe_delay(ms);
   }
 
   void yield() {
-    thermalManager.manage_heater();
+    if (!printer_killed)
+      thermalManager.manage_heater();
   }
 
   float getActualTemp_celsius(const uint8_t extruder) {
@@ -352,11 +434,7 @@ namespace UI {
   #endif
 
   uint8_t getProgress_percent() {
-    #if ENABLED(SDSUPPORT)
-      return card.percentDone();
-    #else
-      return 0;
-    #endif
+    return IFSD(card.percentDone(), 0);
   }
 
   uint32_t getProgress_seconds_elapsed() {
@@ -415,35 +493,23 @@ namespace UI {
   }
 
   void printFile(const char *filename) {
-    #if ENABLED(SDSUPPORT)
-      card.openAndPrintFile(filename);
-    #endif
+    IFSD(card.openAndPrintFile(filename), NOOP);
+  }
+
+  bool isPrintingFromMediaPaused() {
+    return IFSD(isPrintingFromMedia() && !card.sdprinting, false);
   }
 
   bool isPrintingFromMedia() {
-    #if ENABLED(SDSUPPORT)
-      return card.cardOK && card.isFileOpen() && card.sdprinting;
-    #else
-      return false;
-    #endif
+    return IFSD(card.cardOK && card.isFileOpen(), false);
   }
 
   bool isPrinting() {
-    return (planner.movesplanned() || IS_SD_PRINTING() ||
-      #if ENABLED(SDSUPPORT)
-        (card.cardOK && card.isFileOpen())
-      #else
-        false
-      #endif
-    );
+    return (planner.movesplanned() || IS_SD_PRINTING() || isPrintingFromMedia());
   }
 
   bool isMediaInserted() {
-    #if ENABLED(SDSUPPORT)
-      return IS_SD_INSERTED() && card.cardOK;
-    #else
-      return false;
-    #endif
+    return IFSD(IS_SD_INSERTED() && card.cardOK, false);
   }
 
   void pausePrint() {
@@ -504,42 +570,23 @@ namespace UI {
   }
 
   const char* FileList::filename() {
-    #if ENABLED(SDSUPPORT)
-      return (card.longFilename && card.longFilename[0]) ? card.longFilename : card.filename;
-    #else
-      return "";
-    #endif
+    return IFSD(card.longFilename && card.longFilename[0] ? card.longFilename : card.filename, "");
   }
 
   const char* FileList::shortFilename() {
-    #if ENABLED(SDSUPPORT)
-      return card.filename;
-    #else
-      return "";
-    #endif
+    return IFSD(card.filename, "");
   }
 
   const char* FileList::longFilename() {
-    #if ENABLED(SDSUPPORT)
-      return card.longFilename;
-    #else
-      return "";
-    #endif
+    return IFSD(card.longFilename, "");
   }
 
   bool FileList::isDir() {
-    #if ENABLED(SDSUPPORT)
-      return card.filenameIsDir;
-    #else
-      return false;
-    #endif
+    return IFSD(card.filenameIsDir, false);
   }
 
   uint16_t FileList::count() {
-    #if ENABLED(SDSUPPORT)
-      if (num_files == 0xFFFF) num_files = card.get_num_Files();
-      return num_files;
-    #endif
+    return IFSD((num_files = (num_files == 0xFFFF ? card.get_num_Files() : num_files)), 0);
   }
 
   bool FileList::isAtRootDir() {
@@ -633,6 +680,13 @@ void lcd_status_printf_P(const uint8_t level, const char * const fmt, ...) {
   va_end(args);
   buff[63] = '\0';
   UI::onStatusChanged(buff);
+}
+
+void kill_screen(PGM_P msg) {
+  if (!printer_killed) {
+    printer_killed = true;
+    UI::onPrinterKilled(msg);
+  }
 }
 
 #endif // EXTENSIBLE_UI

@@ -42,6 +42,8 @@
 #include "module/printcounter.h" // PrintCounter or Stopwatch
 #include "feature/closedloop.h"
 
+#include "HAL/shared/Delay.h"
+
 #ifdef ARDUINO
   #include <pins_arduino.h>
 #endif
@@ -610,15 +612,12 @@ void idle(
  * After this the machine will need to be reset.
  */
 void kill(PGM_P const lcd_msg/*=NULL*/) {
-
   thermalManager.disable_all_heaters();
 
   SERIAL_ERROR_START();
   SERIAL_ERRORLNPGM(MSG_ERR_KILLED);
 
-  #if ENABLED(EXTENSIBLE_UI)
-    UI::onPrinterKilled(lcd_msg ? lcd_msg : PSTR(MSG_KILLED));
-  #elif ENABLED(ULTRA_LCD)
+  #if ENABLED(ULTRA_LCD) || ENABLED(EXTENSIBLE_UI)
     kill_screen(lcd_msg ? lcd_msg : PSTR(MSG_KILLED));
   #else
     UNUSED(lcd_msg);
@@ -633,11 +632,14 @@ void kill(PGM_P const lcd_msg/*=NULL*/) {
 
 void minkill() {
 
-  _delay_ms(600);  // Wait a short time (allows messages to get out before shutting down.
-  cli();           // Stop interrupts
-  _delay_ms(250);  // Wait to ensure all interrupts stopped
+  // Wait a short time (allows messages to get out before shutting down.
+  for (int i = 1000; i--;) DELAY_US(600);
 
-  disable_all_steppers();
+  cli(); // Stop interrupts
+
+  // Wait to ensure all interrupts stopped
+  for (int i = 1000; i--;) DELAY_US(250);
+
   thermalManager.disable_all_heaters(); // turn off heaters again
 
   #if HAS_POWER_SWITCH
