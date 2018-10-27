@@ -20,38 +20,24 @@
  *
  */
 
-#if defined(STM32GENERIC) && (defined(STM32F4) || defined(STM32F4xx))
+#if HOTENDS > 2 || E_STEPPERS > 2
+  #error "Creality3D RAMPS supports only 2 hotends / E-steppers. Comment out this line to continue."
+#endif
 
-#include "../../inc/MarlinConfig.h"
+#define BOARD_NAME "Creality3D RAMPS"
 
-#if ENABLED(USE_WATCHDOG)
+//
+// Heaters / Fans
+//
 
-  #include "watchdog_STM32F4.h"
+// Power outputs EFBF or EFBE
+#define MOSFET_D_PIN 7
 
-  IWDG_HandleTypeDef hiwdg;
+#define FIL_RUNOUT_PIN 2
 
-  void watchdog_init() {
-    hiwdg.Instance = IWDG;
-    hiwdg.Init.Prescaler = IWDG_PRESCALER_32; //32kHz LSI clock and 32x prescalar = 1024Hz IWDG clock
-    hiwdg.Init.Reload = 4095;           //4095 counts = 4 seconds at 1024Hz
-    if (HAL_IWDG_Init(&hiwdg) != HAL_OK) {
-      //Error_Handler();
-    }
-  }
+#include "pins_RAMPS.h"
 
-  void watchdog_reset() {
-    /* Refresh IWDG: reload counter */
-    if (HAL_IWDG_Refresh(&hiwdg) != HAL_OK) {
-      /* Refresh Error */
-      //Error_Handler();
-    }
-    else {
-      #if PIN_EXISTS(LED)
-        TOGGLE(LED_PIN);  // heartbeat indicator
-      #endif
-    }
-  }
-
-#endif // USE_WATCHDOG
-
-#endif // STM32F4 || STM32F4xx
+#define EXP1_PIN 65   // A11
+#define EXP2_PIN 66   // A12
+#define EXP3_PIN 11   // SERVO0_PIN
+#define EXP4_PIN 12   // PS_ON_PIN
