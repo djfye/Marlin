@@ -150,11 +150,11 @@
 #endif
 
 // SPI for Max6675 or Max31855 Thermocouple
-//#if DISABLED(SDSUPPORT)
-//  #define MAX6675_SS        53
-//#else
-//  #define MAX6675_SS        49
-//#endif
+#if DISABLED(SDSUPPORT)
+  #define MAX6675_SS        53
+#else
+  #define MAX6675_SS        45
+#endif
 
 //
 // Misc. Functions
@@ -209,8 +209,8 @@
 
     #define BEEPER_PIN      62
 
-    #define LCD_PINS_RS     52
-    #define LCD_PINS_ENABLE 53
+    #define LCD_PINS_RS     63
+    #define LCD_PINS_ENABLE 64
     #define LCD_PINS_D4     48
     #define LCD_PINS_D5     50
     #define LCD_PINS_D6     52
