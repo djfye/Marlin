@@ -126,6 +126,7 @@
 
 #define FAN_PIN             9
 #define FAN1_PIN            8
+#define E0_AUTO_FAN_PIN     6   // BED H2
 #define CONTROLLER_FAN_PIN  FAN1_PIN
 
 //
