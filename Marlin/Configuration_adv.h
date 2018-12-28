@@ -344,8 +344,8 @@
   #if ENABLED(Z_TRIPLE_ENDSTOPS)
     #define Z2_USE_ENDSTOP _XMAX_
     #define Z3_USE_ENDSTOP _YMAX_
-    #define Z_TRIPLE2_ENDSTOPS_ADJUSTMENT  0
-    #define Z_TRIPLE3_ENDSTOPS_ADJUSTMENT  0
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT2  0
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT3  0
   #endif
 #endif
 
@@ -399,7 +399,7 @@
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
 #define Z_HOME_BUMP_MM 5 // deltas need the same for all three axes
-#define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define HOMING_BUMP_DIVISOR { 10, 10, 10 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 
 // When G28 is called, this option will make Y home before X
@@ -1316,43 +1316,43 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS        32  // 0..256
+  #define X_MICROSTEPS       128  // 0..256
 
   #define Y_CURRENT          800
-  #define Y_MICROSTEPS        32
+  #define Y_MICROSTEPS       128
 
   #define Z_CURRENT          800
-  #define Z_MICROSTEPS        32
+  #define Z_MICROSTEPS       128
 
   #define X2_CURRENT         800
-  #define X2_MICROSTEPS       32
+  #define X2_MICROSTEPS      128
 
   #define Y2_CURRENT         800
-  #define Y2_MICROSTEPS       32
+  #define Y2_MICROSTEPS      128
 
   #define Z2_CURRENT         800
-  #define Z2_MICROSTEPS       32
+  #define Z2_MICROSTEPS      128
 
   #define Z3_CURRENT         800
-  #define Z3_MICROSTEPS       32
+  #define Z3_MICROSTEPS      128
 
   #define E0_CURRENT         750
-  #define E0_MICROSTEPS       32
+  #define E0_MICROSTEPS      128
 
   #define E1_CURRENT         750
-  #define E1_MICROSTEPS       32
+  #define E1_MICROSTEPS      128
 
   #define E2_CURRENT         750
-  #define E2_MICROSTEPS       32
+  #define E2_MICROSTEPS      128
 
   #define E3_CURRENT         750
-  #define E3_MICROSTEPS       32
+  #define E3_MICROSTEPS      128
 
   #define E4_CURRENT         750
-  #define E4_MICROSTEPS       32
+  #define E4_MICROSTEPS      128
 
   #define E5_CURRENT         750
-  #define E5_MICROSTEPS       32
+  #define E5_MICROSTEPS      128
 
   /**
    * Override default SPI pins for TMC2130 and TMC2660 drivers here.
@@ -1459,7 +1459,7 @@
    * It is advised to set X/Y/Z_HOME_BUMP_MM to 0.
    * M914 X/Y/Z to live tune the setting
    */
-  //#define SENSORLESS_HOMING // TMC2130 only
+  #define SENSORLESS_HOMING // TMC2130 only
 
   /**
    * Use StallGuard2 to probe the bed with the nozzle.
@@ -1472,7 +1472,7 @@
   #if ENABLED(SENSORLESS_HOMING) || ENABLED(SENSORLESS_PROBING)
     #define X_STALL_SENSITIVITY  3
     #define Y_STALL_SENSITIVITY  3
-    #define Z_STALL_SENSITIVITY  3
+    //#define Z_STALL_SENSITIVITY  3
   #endif
 
   /**
@@ -1812,8 +1812,8 @@
   #define USER_DESC_4 "Heat Bed/Home/Level"
   #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
-  //#define USER_DESC_5 "Home & Info"
-  //#define USER_GCODE_5 "G28\nM503"
+  #define USER_DESC_5 "Home & Info"
+  #define USER_GCODE_5 "G28\nM503"
 #endif
 
 /**
