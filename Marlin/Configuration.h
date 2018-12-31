@@ -780,9 +780,9 @@
  * value set here, it may happen instantaneously.
  */
 #if DISABLED(JUNCTION_DEVIATION)
-#define DEFAULT_XJERK                 2.0
-#define DEFAULT_YJERK                 DEFAULT_XJERK
-#define DEFAULT_ZJERK                 DEFAULT_XJERK // Must be same as XY for delta
+  #define DEFAULT_XJERK                 2.0
+  #define DEFAULT_YJERK                 DEFAULT_XJERK
+  #define DEFAULT_ZJERK                 DEFAULT_XJERK // Must be same as XY for delta
 #endif
 
 #define DEFAULT_EJERK    2.5  // May be used by Linear Advance
