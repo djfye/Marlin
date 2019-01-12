@@ -143,6 +143,7 @@
 #define TEMP_BED_PIN        4   // ANALOG A3
 
 // The thermocouple uses Analog pins
+//#define VER_WITH_THERMOCOUPLE
 #if ENABLED(VER_WITH_THERMOCOUPLE) // Defined in Configuration.h
   #define TEMP_4_PIN        5   // A5
   #define TEMP_5_PIN        6   // A6 (Marlin 2.0 not support)
