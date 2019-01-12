@@ -451,7 +451,7 @@ namespace ExtUI {
 
     void setZOffset_mm(const float value) {
       const float diff = (value - getZOffset_mm()) / planner.steps_to_mm[Z_AXIS];
-      addZOffset_steps(diff > 0 ? ceil(diff) : floor(diff));
+      addZOffset_steps(diff > 0 ? CEIL(diff) : FLOOR(diff));
     }
 
     void addZOffset_steps(int16_t babystep_increment) {
@@ -578,7 +578,7 @@ namespace ExtUI {
   }
 
   bool isPrintingFromMedia() {
-    return IFSD(card.flag.cardOK && card.isFileOpen(), false);
+    return IFSD(card.isFileOpen(), false);
   }
 
   bool isPrinting() {
@@ -586,7 +586,7 @@ namespace ExtUI {
   }
 
   bool isMediaInserted() {
-    return IFSD(IS_SD_INSERTED() && card.flag.cardOK, false);
+    return IFSD(IS_SD_INSERTED() && card.isDetected(), false);
   }
 
   void pausePrint() {
@@ -703,13 +703,13 @@ void MarlinUI::update() {
       last_sd_status = sd_status;
       if (sd_status) {
         card.initsd();
-        if (card.flag.cardOK)
+        if (card.isDetected())
           ExtUI::onMediaInserted();
         else
           ExtUI::onMediaError();
       }
       else {
-        const bool ok = card.flag.cardOK;
+        const bool ok = card.isDetected();
         card.release();
         if (ok) ExtUI::onMediaRemoved();
       }
