@@ -692,7 +692,7 @@
  *
  * :[2,3,4,5,6,7]
  */
-//#define ENDSTOP_NOISE_THRESHOLD 5
+#define ENDSTOP_NOISE_THRESHOLD 5
 
 //=============================================================================
 //============================== Movement Settings ============================
@@ -721,7 +721,7 @@
  */
 // variables to calculate steps
 #define XYZ_FULL_STEPS_PER_ROTATION 400
-#define XYZ_MICROSTEPS 32
+#define XYZ_MICROSTEPS 256
 #define XYZ_BELT_PITCH 2
 #define XYZ_PULLEY_TEETH 20
 #define E0_MSTEPS 56.4320375
@@ -741,7 +741,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 500, 50 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 500, 200 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -749,7 +749,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 4500, 4500, 4500, 500 }
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 1000, 1000 }
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -759,9 +759,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 //
 // Use Junction Deviation instead of traditional Jerk Limiting
@@ -914,7 +914,7 @@
 #define XY_PROBE_SPEED 6000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 10)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5    100 10
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 5)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1360,7 +1360,7 @@
 #endif
 
 // Delta only homes to Z
-#define HOMING_FEEDRATE_Z  (100*60)
+#define HOMING_FEEDRATE_Z  (50*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
