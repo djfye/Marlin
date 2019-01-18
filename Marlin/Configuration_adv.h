@@ -1013,7 +1013,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 0
+#define MINIMUM_STEPPER_PULSE 2
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1337,22 +1337,22 @@
   #define Z3_CURRENT         700
   #define Z3_MICROSTEPS      256
 
-  #define E0_CURRENT         650
+  #define E0_CURRENT         500
   #define E0_MICROSTEPS      256
 
-  #define E1_CURRENT         650
+  #define E1_CURRENT         500
   #define E1_MICROSTEPS      256
 
-  #define E2_CURRENT         650
+  #define E2_CURRENT         500
   #define E2_MICROSTEPS      256
 
-  #define E3_CURRENT         650
+  #define E3_CURRENT         500
   #define E3_MICROSTEPS      256
 
-  #define E4_CURRENT         650
+  #define E4_CURRENT         500
   #define E4_MICROSTEPS      256
 
-  #define E5_CURRENT         650
+  #define E5_CURRENT         500
   #define E5_MICROSTEPS      256
 
   /**
@@ -1389,7 +1389,7 @@
    */
   #define STEALTHCHOP_XY
   #define STEALTHCHOP_Z
-  //#define STEALTHCHOP_E
+  #define STEALTHCHOP_E
 
   /**
    * Optimize spreadCycle chopper parameters by using predefined parameter sets
@@ -1434,19 +1434,19 @@
    */
   //#define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
-  #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
-  #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD     100
-  #define Z2_HYBRID_THRESHOLD    100
-  #define Z3_HYBRID_THRESHOLD    100
-  #define E0_HYBRID_THRESHOLD     25
-  #define E1_HYBRID_THRESHOLD     25
-  #define E2_HYBRID_THRESHOLD     25
-  #define E3_HYBRID_THRESHOLD     25
-  #define E4_HYBRID_THRESHOLD     25
-  #define E5_HYBRID_THRESHOLD     25
+  #define X_HYBRID_THRESHOLD      50  // [mm/s]
+  #define X2_HYBRID_THRESHOLD     50
+  #define Y_HYBRID_THRESHOLD      50
+  #define Y2_HYBRID_THRESHOLD     50
+  #define Z_HYBRID_THRESHOLD      50
+  #define Z2_HYBRID_THRESHOLD     50
+  #define Z3_HYBRID_THRESHOLD     50
+  #define E0_HYBRID_THRESHOLD     10
+  #define E1_HYBRID_THRESHOLD     10
+  #define E2_HYBRID_THRESHOLD     10
+  #define E3_HYBRID_THRESHOLD     10
+  #define E4_HYBRID_THRESHOLD     10
+  #define E5_HYBRID_THRESHOLD     10
 
   /**
    * Use StallGuard2 to sense an obstacle and trigger an endstop.
