@@ -1013,7 +1013,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-#define MINIMUM_STEPPER_PULSE 2
+#define MINIMUM_STEPPER_PULSE 1
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1337,22 +1337,22 @@
   #define Z3_CURRENT         700
   #define Z3_MICROSTEPS      256
 
-  #define E0_CURRENT         500
+  #define E0_CURRENT         600
   #define E0_MICROSTEPS      256
 
-  #define E1_CURRENT         500
+  #define E1_CURRENT         600
   #define E1_MICROSTEPS      256
 
-  #define E2_CURRENT         500
+  #define E2_CURRENT         600
   #define E2_MICROSTEPS      256
 
-  #define E3_CURRENT         500
+  #define E3_CURRENT         600
   #define E3_MICROSTEPS      256
 
-  #define E4_CURRENT         500
+  #define E4_CURRENT         600
   #define E4_MICROSTEPS      256
 
-  #define E5_CURRENT         500
+  #define E5_CURRENT         600
   #define E5_MICROSTEPS      256
 
   /**
@@ -1479,9 +1479,9 @@
   //#define SENSORLESS_PROBING // TMC2130 only
 
   #if ENABLED(SENSORLESS_HOMING) || ENABLED(SENSORLESS_PROBING)
-    #define X_STALL_SENSITIVITY  3            // homing speed: 50 -2   25 3
-    #define Y_STALL_SENSITIVITY  3            // homing speed: 50  0   25 3
-    #define Z_STALL_SENSITIVITY  3            // homing speed: 50  0   25 3
+    #define X_STALL_SENSITIVITY  -2            // homing speed: 50 -2   25 3
+    #define Y_STALL_SENSITIVITY  -2            // homing speed: 50 -2   25 3
+    #define Z_STALL_SENSITIVITY  -2            // homing speed: 50 -2   25 3
   #endif
 
   /**

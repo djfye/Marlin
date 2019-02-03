@@ -327,7 +327,7 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '61':"100k Formbot / Vivedino 3950 350C thermistor 4.7k pullup", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 1047
+#define TEMP_SENSOR_0 5
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -346,12 +346,12 @@
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
 // Extruder temperature must be close to target for this long before M109 returns success
-#define TEMP_RESIDENCY_TIME 2   // (seconds)
+#define TEMP_RESIDENCY_TIME 5   // (seconds)
 #define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
 
 // Bed temperature must be close to target for this long before M190 returns success
-#define TEMP_BED_RESIDENCY_TIME 2   // (seconds)
+#define TEMP_BED_RESIDENCY_TIME 5   // (seconds)
 #define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_BED_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
 
@@ -420,10 +420,15 @@
 
   // FIND YOUR OWN: "M303 E0 C8 S240" to run autotune on the hotend at 240 degreesC for 8 cycles.
 
-  // Ultibots 24V 40W cartridge heater
-  #define DEFAULT_Kp 13.832483
-  #define DEFAULT_Ki 0.649931
-  #define DEFAULT_Kd 73.599190
+  // Ultibots 24V 40W cartridge heater, sensor -3
+  //#define DEFAULT_Kp 13.832483
+  //#define DEFAULT_Ki 0.649931
+  //#define DEFAULT_Kd 73.599190
+
+  // Ultibots 24V 40W cartridge heater, sensor 5
+  #define DEFAULT_Kp 20.88
+  #define DEFAULT_Ki 2.69
+  #define DEFAULT_Kd 40.50
 
 #endif // PIDTEMP
 
@@ -474,7 +479,7 @@
 
   // FIND YOUR OWN: "M303 E-1 C8 S110" to run autotune on the bed at 110 degreesC for 8 cycles.
 
-  // JSR 120V 400W silicone heater
+  // JSR 120V 400W silicone heater, sensor 75
   #define DEFAULT_bedKp 93.211769
   #define DEFAULT_bedKi 10.130062
   #define DEFAULT_bedKd 214.422028
@@ -549,12 +554,12 @@
   #define DELTA_SEGMENTS_PER_SECOND 200
 
   // After homing move down to a height where XY movement is unconstrained
-  //#define DELTA_HOME_TO_SAFE_ZONE
+  #define DELTA_HOME_TO_SAFE_ZONE
 
   // Delta calibration menu
   // uncomment to add three points calibration menu option.
   // See http://minow.blogspot.com/index.html#4918805519571907051
-  //#define DELTA_CALIBRATION_MENU
+  #define DELTA_CALIBRATION_MENU
 
   // uncomment to add G33 Delta Auto-Calibration (Enable EEPROM_SETTINGS to store results)
   #define DELTA_AUTO_CALIBRATION
@@ -568,7 +573,7 @@
 
   #if ENABLED(DELTA_AUTO_CALIBRATION) || ENABLED(DELTA_CALIBRATION_MENU)
     // Set the radius for the calibration probe points - max 0.9 * DELTA_PRINTABLE_RADIUS for non-eccentric probes
-    #define DELTA_CALIBRATION_RADIUS 100.0 // mm
+    #define DELTA_CALIBRATION_RADIUS ((DELTA_PRINTABLE_RADIUS) - (MIN_PROBE_EDGE)) // mm
     // Set the steprate for papertest probing
     #define PROBE_MANUALLY_STEP 0.05 // mm
   #endif
@@ -692,7 +697,7 @@
  *
  * :[2,3,4,5,6,7]
  */
-#define ENDSTOP_NOISE_THRESHOLD 5
+#define ENDSTOP_NOISE_THRESHOLD 6
 
 //=============================================================================
 //============================== Movement Settings ============================
@@ -728,13 +733,8 @@
 
 // delta speeds must be the same on xyz
 #define DEFAULT_E0_STEPS_PER_UNIT ((E0_MSTEPS) * (XYZ_MICROSTEPS))
-#define DEFAULT_E0_VOLUMETRIC_STEPS_PER_UNIT ((E0_MSTEPS) / 6.3793965 * (XYZ_MICROSTEPS))
 #define DEFAULT_XYZ_STEPS_PER_UNIT ((XYZ_FULL_STEPS_PER_ROTATION) * (XYZ_MICROSTEPS) / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
-#if DISABLED(VOLUMETRIC_DEFAULT_ON)
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_E0_STEPS_PER_UNIT }   // default steps per unit for PowerWasp
-#else
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_E0_VOLUMETRIC_STEPS_PER_UNIT }   // default steps per unit for PowerWasp
-#endif
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_E0_STEPS_PER_UNIT }   // default steps per unit for PowerWasp
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -760,7 +760,7 @@
  *   M204 T    Travel Acceleration
  */
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_RETRACT_ACCELERATION   200    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 //
@@ -908,13 +908,16 @@
  */
 #define X_PROBE_OFFSET_FROM_EXTRUDER 0        // Z probe to nozzle X offset: -left  +right
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 0        // Z probe to nozzle Y offset: -front +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -0.1935  // Z probe to nozzle Z offset: -below (always!)
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0.188    // Z probe to nozzle Z offset: -below (always!)
+
+// Certain types of probes need to stay away from edges
+#define MIN_PROBE_EDGE 10
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 6000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 5)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 10)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1182,8 +1185,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-#define AUTO_BED_LEVELING_UBL
+#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
@@ -1229,14 +1232,14 @@
 
   // Set the number of grid points per dimension.
   // Works best with 5 or more points in each dimension.
-  #define GRID_MAX_POINTS_X 5
+  #define GRID_MAX_POINTS_X 13
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
-  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
-  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
-  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
+  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
+  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
+  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
+  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1251,7 +1254,7 @@
     // Experimental Subdivision of the grid by Catmull-Rom method.
     // Synthesizes intermediate points to produce a more detailed mesh.
     //
-    //#define ABL_BILINEAR_SUBDIVISION
+    #define ABL_BILINEAR_SUBDIVISION
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
       #define BILINEAR_SUBDIVISIONS 3
@@ -1283,8 +1286,8 @@
   //=================================== Mesh ==================================
   //===========================================================================
 
-  #define MESH_INSET 10          // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 3    // Don't use more than 7 points per axis, implementation limited.
+  #define MESH_INSET 1            // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 13    // Don't use more than 7 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
@@ -1313,7 +1316,7 @@
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
   #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
-  //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
+  #define MESH_EDIT_MENU          // Add a menu to edit mesh points
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
@@ -1360,7 +1363,7 @@
 #endif
 
 // Delta only homes to Z
-#define HOMING_FEEDRATE_Z  (50*60)
+#define HOMING_FEEDRATE_Z  (100*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1473,10 +1476,10 @@
 #define PREHEAT_1_TEMP_BED     60
 #define PREHEAT_1_FAN_SPEED   255 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "ABS"
+#define PREHEAT_2_LABEL       "PETG"
 #define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    100
-#define PREHEAT_2_FAN_SPEED   255 // Value from 0 to 255
+#define PREHEAT_2_TEMP_BED     90
+#define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
  * Nozzle Park

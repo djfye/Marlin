@@ -132,15 +132,11 @@
 //
 // Temperature Sensors
 //
-#if TEMP_SENSOR_0 != 20
-  #define TEMP_0_PIN        0   // ANALOG A0
-#else
-  #define TEMP_0_PIN       11   // ANALOG A11
-#endif
-#define TEMP_1_PIN          1   // ANALOG A1
-#define TEMP_2_PIN          2   // ANALOG A2
-#define TEMP_3_PIN          3   // ANALOG A2
-#define TEMP_BED_PIN        4   // ANALOG A3
+#define TEMP_0_PIN          1   // ANALOG A0
+#define TEMP_1_PIN          2   // ANALOG A1
+#define TEMP_2_PIN          3   // ANALOG A2
+#define TEMP_3_PIN          0   // ANALOG A3
+#define TEMP_BED_PIN        4   // ANALOG A4
 
 // The thermocouple uses Analog pins
 //#define VER_WITH_THERMOCOUPLE
