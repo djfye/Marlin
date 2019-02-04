@@ -74,8 +74,8 @@
  * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 50        // Seconds
-  #define THERMAL_PROTECTION_HYSTERESIS 6     // Degrees Celsius
+  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
   //#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
 
@@ -91,7 +91,7 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-  #define WATCH_TEMP_PERIOD 40                // Seconds
+  #define WATCH_TEMP_PERIOD 20                // Seconds
   #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -99,13 +99,13 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD 11    // Seconds
-  #define THERMAL_PROTECTION_BED_HYSTERESIS 4 // Degrees Celsius
+  #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD 100               // Seconds
+  #define WATCH_BED_TEMP_PERIOD 60                // Seconds
   #define WATCH_BED_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -238,7 +238,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-//#define E0_AUTO_FAN_PIN  6   // BED H2
+//#define E0_AUTO_FAN_PIN 6   // BED H2
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -401,7 +401,7 @@
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
 #define Z_HOME_BUMP_MM 5 // deltas need the same for all three axes
-#define HOMING_BUMP_DIVISOR { 10, 10, 10 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define HOMING_BUMP_DIVISOR { 2, 2, 2 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 
 // When G28 is called, this option will make Y home before X
@@ -582,10 +582,10 @@
 #endif
 
 //#define DIGIPOT_MCP4018          // Requires library from https://github.com/stawel/SlowSoftI2CMaster
-#define DIGIPOT_I2C_NUM_CHANNELS 5 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
+#define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8     MKS SBASE: 5
 // Actual motor currents in Amps. The number of entries must match DIGIPOT_I2C_NUM_CHANNELS.
 // These correspond to the physical drivers, so be mindful if the order is changed.
-#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.68, 1.68, 1.68, 1.5, 1.5 }  //  MKS SBASE: 5
+#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }  //  AZTEEG_X3_PRO
 
 //===========================================================================
 //=============================Additional Features===========================
@@ -896,7 +896,6 @@
   #if ENABLED(MOVE_Z_WHEN_IDLE)
     #define MOVE_Z_IDLE_MULTIPLICATOR 1     // Multiply 1mm by this factor for the move step size.
   #endif
-
   #define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
@@ -1001,7 +1000,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_DIR_DELAY 20
+//#define MINIMUM_STEPPER_DIR_DELAY 650
 
 /**
  * Minimum stepper driver pulse width (in µs)
@@ -1556,7 +1555,7 @@
    */
   #define TMC_ADV() {  }
 
-#endif // TMC2130 || TMC2208
+#endif // HAS_TRINAMIC
 
 // @section L6470
 
@@ -1936,8 +1935,8 @@
   #define USER_DESC_4 "Heat Bed/Home/Level"
   #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
-  #define USER_DESC_5 "Home & Info"
-  #define USER_GCODE_5 "G28\nM503"
+  //#define USER_DESC_5 "Home & Info"
+  //#define USER_GCODE_5 "G28\nM503"
 #endif
 
 /**

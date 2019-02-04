@@ -564,7 +564,7 @@
   #define DELTA_SEGMENTS_PER_SECOND 200
 
   // After homing move down to a height where XY movement is unconstrained
-  #define DELTA_HOME_TO_SAFE_ZONE
+  //#define DELTA_HOME_TO_SAFE_ZONE
 
   // Delta calibration menu
   // uncomment to add three points calibration menu option.
@@ -585,29 +585,29 @@
     // Set the radius for the calibration probe points - max 0.9 * DELTA_PRINTABLE_RADIUS for non-eccentric probes
     #define DELTA_CALIBRATION_RADIUS ((DELTA_PRINTABLE_RADIUS) - (MIN_PROBE_EDGE)) // mm
     // Set the steprate for papertest probing
-    #define PROBE_MANUALLY_STEP 0.05 // mm
+    #define PROBE_MANUALLY_STEP 0.05      // (mm)
   #endif
 
   // Print surface diameter/2 minus unreachable space (avoid collisions with vertical towers).
-  #define DELTA_PRINTABLE_RADIUS 110.0 // mm
+  #define DELTA_PRINTABLE_RADIUS 110.0    // (mm)
 
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 315.0 // mm
+  #define DELTA_DIAGONAL_ROD 315.0        // (mm)
 
-  // height from z=0 to home position
-  #define DELTA_HEIGHT 215.00 // get this value from auto calibrate
+  // Distance between bed and nozzle Z home position
+  #define DELTA_HEIGHT 215.00             // (mm) Get this value from G33 auto calibrate
 
-  #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // get these from auto calibrate
+  #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // Get these values from G33 auto calibrate
 
   // Horizontal distance bridged by diagonal push rods when effector is centered.
-  #define DELTA_RADIUS 165.00 //mm  Get this value from auto calibrate
+  #define DELTA_RADIUS 165.00              // (mm) Get this value from G33 auto calibrate
 
   // Trim adjustments for individual towers
   // tower angle corrections for X and Y tower / rotate XYZ so Z tower angle = 0
   // measured in degrees anticlockwise looking from above the printer
-  #define DELTA_TOWER_ANGLE_TRIM { 0.0, 0.0, 0.0 } // get these values from auto calibrate
+  #define DELTA_TOWER_ANGLE_TRIM { 0.0, 0.0, 0.0 } // Get these values from G33 auto calibrate
 
-  // delta radius and diaginal rod adjustments measured in mm
+  // Delta radius and diagonal rod adjustments (mm)
   #define DELTA_RADIUS_TRIM_TOWER { 0.0, 0.0, 0.0 }
   #define DELTA_DIAGONAL_ROD_TRIM_TOWER { 0.0, 0.0, 0.0 }
 
@@ -684,6 +684,7 @@
 //#define X2_DRIVER_TYPE TMC2130
 //#define Y2_DRIVER_TYPE TMC2130
 //#define Z2_DRIVER_TYPE TMC2130
+//#define Z3_DRIVER_TYPE TMC2130
 #define E0_DRIVER_TYPE TMC2130
 #define E1_DRIVER_TYPE TMC2130
 #define E2_DRIVER_TYPE TMC2130
@@ -751,7 +752,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 500, 200 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 500, 100 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -789,13 +790,13 @@
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
-#if DISABLED(JUNCTION_DEVIATION) || ENABLED(JUNCTION_DEVIATION)
-  #define DEFAULT_XJERK                 2.0
-  #define DEFAULT_YJERK                 DEFAULT_XJERK
-  #define DEFAULT_ZJERK                 DEFAULT_XJERK // Must be same as XY for delta
+#if DISABLED(JUNCTION_DEVIATION)
+  #define DEFAULT_XJERK 2.0
+  #define DEFAULT_YJERK DEFAULT_XJERK
+  #define DEFAULT_ZJERK DEFAULT_XJERK // Must be same as XY for delta
 #endif
 
-#define DEFAULT_EJERK    2.5  // May be used by Linear Advance
+#define DEFAULT_EJERK   2.5  // May be used by Linear Advance
 
 /**
  * S-Curve Acceleration
@@ -893,50 +894,6 @@
   #define Z_PROBE_RETRACT_X X_MAX_POS
 #endif
 
-//
-// For Z_PROBE_ALLEN_KEY see the Delta example configurations.
-//
-
-/**
- *   Z Probe to nozzle (X,Y) offset, relative to (0, 0).
- *   X and Y offsets must be integers.
- *
- *   In the following example the X and Y offsets are both positive:
- *   #define X_PROBE_OFFSET_FROM_EXTRUDER 10
- *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
- *
- *      +-- BACK ---+
- *      |           |
- *    L |    (+) P  | R <-- probe (20,20)
- *    E |           | I
- *    F | (-) N (+) | G <-- nozzle (10,10)
- *    T |           | H
- *      |    (-)    | T
- *      |           |
- *      O-- FRONT --+
- *    (0,0)
- */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 0        // Z probe to nozzle X offset: -left  +right
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 0        // Z probe to nozzle Y offset: -front +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 0.188    // Z probe to nozzle Z offset: -below (always!)
-
-// Certain types of probes need to stay away from edges
-#define MIN_PROBE_EDGE 10
-
-// X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 6000
-
-// Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 10)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
-
-// Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
-
-// The number of probes to perform at each point.
-//   Set to 2 for a fast/slow probe, using the second probe result.
-//   Set to 3 or more for slow probes, averaging the results.
-//#define MULTIPLE_PROBING 2
-
 /**
  * Allen key retractable z-probe as seen on many Kossel delta printers - http://reprap.org/wiki/Kossel#Automatic_bed_leveling_probe
  * Deploys by touching z-axis belt. Retracts by pushing the probe down. Uses Z_MIN_PIN.
@@ -985,6 +942,46 @@
 #endif // Z_PROBE_ALLEN_KEY
 
 /**
+ *   Z Probe to nozzle (X,Y) offset, relative to (0, 0).
+ *   X and Y offsets must be integers.
+ *
+ *   In the following example the X and Y offsets are both positive:
+ *   #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+ *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
+ *
+ *      +-- BACK ---+
+ *      |           |
+ *    L |    (+) P  | R <-- probe (20,20)
+ *    E |           | I
+ *    F | (-) N (+) | G <-- nozzle (10,10)
+ *    T |           | H
+ *      |    (-)    | T
+ *      |           |
+ *      O-- FRONT --+
+ *    (0,0)
+ */
+#define X_PROBE_OFFSET_FROM_EXTRUDER 0.0     // Z probe to nozzle X offset: -left  +right
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 0.0     // Z probe to nozzle Y offset: -front +behind
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0.188     // Z probe to nozzle Z offset: -below (always!)
+
+// Certain types of probes need to stay away from edges
+#define MIN_PROBE_EDGE 10
+
+// X and Y axis travel speed (mm/m) between probes
+#define XY_PROBE_SPEED 8000
+
+// Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 10)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
+
+// Feedrate (mm/m) for the "accurate" probe of each point
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+
+// The number of probes to perform at each point.
+//   Set to 2 for a fast/slow probe, using the second probe result.
+//   Set to 3 or more for slow probes, averaging the results.
+//#define MULTIPLE_PROBING 2
+
+/**
  * Z probes require clearance when deploying, stowing, and moving between
  * probe points to avoid hitting the bed and other hardware.
  * Servo-mounted probes require extra space for the arm to rotate.
@@ -998,12 +995,12 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE   5 // Z Clearance for Deploy/Stow
-#define Z_CLEARANCE_BETWEEN_PROBES 5 // Z Clearance between probe points
-#define Z_CLEARANCE_MULTI_PROBE    5 // Z Clearance between multiple probes
-//#define Z_AFTER_PROBING          5 // Z position after probing is done
+#define Z_CLEARANCE_DEPLOY_PROBE    5 // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
+#define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
+//#define Z_AFTER_PROBING           5 // Z position after probing is done
 
-#define Z_PROBE_LOW_POINT         -5 // Farthest distance below the trigger-point to go before stopping
+#define Z_PROBE_LOW_POINT          -5 // Farthest distance below the trigger-point to go before stopping
 
 // For M851 give a range for adjusting the Z probe offset
 #define Z_PROBE_OFFSET_RANGE_MIN -20
@@ -1242,12 +1239,11 @@
    */
   #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE    0.4   // (mm) Diameter of primary nozzle.
-    #define MESH_TEST_LAYER_HEIGHT   0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
-    #define MESH_TEST_HOTEND_TEMP  240.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-    #define MESH_TEST_BED_TEMP      90.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
+    #define MESH_TEST_HOTEND_TEMP  240.0  // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_BED_TEMP      90.0  // (°C) Default bed temperature for the G26 Mesh Validation Tool.
   #endif
-
 
 #endif
 
@@ -1259,10 +1255,10 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
-  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
-  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
-  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
+  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
+  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
+  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
+  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1293,7 +1289,7 @@
 
   #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Mesh inset margin on print area
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
   #define GRID_MAX_POINTS_X 13      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
@@ -1519,7 +1515,7 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), 0, 20 }
   #define NOZZLE_PARK_XY_FEEDRATE 100   // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
   #define NOZZLE_PARK_Z_FEEDRATE 5      // Z axis feedrate in mm/s (not used for delta printers)
 #endif
@@ -2187,7 +2183,7 @@
  *  - Change to green once print has finished
  *  - Turn off after the print has finished and the user has pushed a button
  */
-#if ENABLED(BLINKM) || ENABLED(RGB_LED) || ENABLED(RGBW_LED) || ENABLED(PCA9632) || ENABLED(PCA9533)|| ENABLED(NEOPIXEL_LED)
+#if ENABLED(BLINKM) || ENABLED(RGB_LED) || ENABLED(RGBW_LED) || ENABLED(PCA9632) || ENABLED(NEOPIXEL_LED)
   #define PRINTER_EVENT_LEDS
 #endif
 
