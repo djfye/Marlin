@@ -132,10 +132,10 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN          1   // ANALOG A0
-#define TEMP_1_PIN          2   // ANALOG A1
-#define TEMP_2_PIN          3   // ANALOG A2
-#define TEMP_3_PIN          0   // ANALOG A3
+#define TEMP_0_PIN          0   // ANALOG A0
+#define TEMP_1_PIN          1   // ANALOG A1
+#define TEMP_2_PIN          2   // ANALOG A2
+#define TEMP_3_PIN          3   // ANALOG A3
 #define TEMP_BED_PIN        4   // ANALOG A4
 
 // The thermocouple uses Analog pins
@@ -147,9 +147,9 @@
 
 // SPI for Max6675 or Max31855 Thermocouple
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS_PIN  53
+  #define MAX6675_SS_PIN  77
 #else
-  #define MAX6675_SS_PIN  45
+  #define MAX6675_SS_PIN  77
 #endif
 
 //

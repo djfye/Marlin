@@ -337,7 +337,7 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '61':"100k Formbot / Vivedino 3950 350C thermistor 4.7k pullup", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 -3
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -431,14 +431,14 @@
   // FIND YOUR OWN: "M303 E0 C8 S240" to run autotune on the hotend at 240 degreesC for 8 cycles.
 
   // Ultibots 24V 40W cartridge heater, sensor -3
-  //#define DEFAULT_Kp 13.832483
-  //#define DEFAULT_Ki 0.649931
-  //#define DEFAULT_Kd 73.599190
+  #define DEFAULT_Kp 13.832483
+  #define DEFAULT_Ki 0.649931
+  #define DEFAULT_Kd 73.599190
 
   // Ultibots 24V 40W cartridge heater, sensor 5
-  #define DEFAULT_Kp 20.88
-  #define DEFAULT_Ki 2.69
-  #define DEFAULT_Kd 40.50
+  //#define DEFAULT_Kp 20.88
+  //#define DEFAULT_Ki 2.69
+  //#define DEFAULT_Kd 40.50
 
 #endif // PIDTEMP
 
@@ -694,7 +694,7 @@
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
-//#define ENDSTOP_INTERRUPTS_FEATURE
+#define ENDSTOP_INTERRUPTS_FEATURE
 
 /**
  * Endstop Noise Threshold
@@ -790,7 +790,7 @@
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
-#if DISABLED(JUNCTION_DEVIATION)
+#if DISABLED(JUNCTION_DEVIATION) || ENABLED(JUNCTION_DEVIATION)
   #define DEFAULT_XJERK 2.0
   #define DEFAULT_YJERK DEFAULT_XJERK
   #define DEFAULT_ZJERK DEFAULT_XJERK // Must be same as XY for delta
@@ -971,7 +971,7 @@
 #define XY_PROBE_SPEED 8000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 10)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z / 5)      // HOMING_FEEDRATE_Z   homing speed: 25 2   50 5   100 10
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1255,10 +1255,10 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
-  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
-  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS + MIN_PROBE_EDGE)
-  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS - (MIN_PROBE_EDGE)
+  #define LEFT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
+  #define RIGHT_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
+  #define FRONT_PROBE_BED_POSITION -(DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE))
+  #define BACK_PROBE_BED_POSITION DELTA_PRINTABLE_RADIUS -(MIN_PROBE_EDGE)
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1382,7 +1382,7 @@
 #endif
 
 // Delta only homes to Z
-#define HOMING_FEEDRATE_Z  (100*60)
+#define HOMING_FEEDRATE_Z  (50*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS

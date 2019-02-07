@@ -401,7 +401,7 @@
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
 #define Z_HOME_BUMP_MM 5 // deltas need the same for all three axes
-#define HOMING_BUMP_DIVISOR { 2, 2, 2 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define HOMING_BUMP_DIVISOR { 10, 10, 10 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 
 // When G28 is called, this option will make Y home before X
@@ -1950,14 +1950,14 @@
  * Specify an action command to send to the host on pause and resume.
  * Will be sent in the form '//action:ACTION_ON_PAUSE', e.g. '//action:pause'.
  * The host must be configured to handle the action command.
- * 
+ *
  *   PAUSE / RESUME : Used in non-parking scenarios where the host handles the
  *                    action while Marlin continues to process G-Code. (M24/M25)
- * 
+ *
  * PAUSED / RESUMED : Used in scenarios where Marlin handles pause and filament-
  *                    change actions and the host needs to stop sending commands
  *                    until the machine is ready to resume. (M125/M600)
- * 
+ *
  *           CANCEL : Instructs the host to abort the print job. Used when the
  *                    print is canceled from the LCD menu.
  */
