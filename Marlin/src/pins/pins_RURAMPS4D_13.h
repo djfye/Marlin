@@ -148,9 +148,11 @@
 //
 // SPI for Max6675 or Max31855 Thermocouple
 //
-#if (DISABLED(SDSUPPORT) && ! HAS_TRINAMIC)
+#if (DISABLED(SDSUPPORT) && !HAS_TRINAMIC)
   #define MAX6675_SS_PIN   10
 #else
+  #define MAX6675_DO_PIN   45
+  #define MAX6675_SCK_PIN  46
   #define MAX6675_SS_PIN   47
 #endif
 
