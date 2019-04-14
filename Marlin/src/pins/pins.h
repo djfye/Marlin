@@ -163,9 +163,11 @@
 #elif MB(FYSETC_F6_13)
   #include "pins_FYSETC_F6_13.h"      // ATmega2560                                 env:megaatmega2560
 #elif MB(DUPLICATOR_I3_PLUS)
-  #include "pins_DUPLICATOR_I3_PLUS.h" // ATmega2560                                 env:megaatmega2560
+  #include "pins_DUPLICATOR_I3_PLUS.h" // ATmega2560                                env:megaatmega2560
 #elif MB(VORON)
   #include "pins_VORON.h"             // ATmega2560                                 env:megaatmega2560
+#elif MB(TRONXY_V3_1_0)
+  #include "pins_TRONXY_V3_1_0.h"     // ATmega2560                                 env:megaatmega2560
 
 //
 // Other ATmega1280, ATmega2560
@@ -812,7 +814,7 @@
 //
 // Disable unused endstop / probe pins
 //
-#if !HAS_BED_PROBE || DISABLED(Z_MIN_PROBE_ENDSTOP)
+#if !USES_Z_MIN_PROBE_ENDSTOP
   #undef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN    -1
 #endif
@@ -872,7 +874,7 @@
 #define _EPIN(p,q) __EPIN(p,q)
 
 // The X2 axis, if any, should be the next open extruder port
-#if ENABLED(DUAL_X_CARRIAGE) || ENABLED(X_DUAL_STEPPER_DRIVERS)
+#if EITHER(DUAL_X_CARRIAGE, X_DUAL_STEPPER_DRIVERS)
   #ifndef X2_STEP_PIN
     #define X2_STEP_PIN   _EPIN(E_STEPPERS, STEP)
     #define X2_DIR_PIN    _EPIN(E_STEPPERS, DIR)
