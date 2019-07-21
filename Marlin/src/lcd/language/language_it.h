@@ -1,9 +1,9 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
- * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,10 @@
 #define MSG_LASER_OFF                       _UxGT("Laser Off")
 #define MSG_LASER_ON                        _UxGT("Laser On")
 #define MSG_LASER_POWER                     _UxGT("Potenza laser")
+#define MSG_SPINDLE_MENU                    _UxGT("Controllo mandrino")
+#define MSG_SPINDLE_OFF                     _UxGT("Mandrino Off")
+#define MSG_SPINDLE_ON                      _UxGT("Mandrino On")
+#define MSG_SPINDLE_POWER                   _UxGT("Potenza mandrino")
 #define MSG_SPINDLE_REVERSE                 _UxGT("Inverti mandrino")
 #define MSG_SWITCH_PS_ON                    _UxGT("Accendi aliment.")
 #define MSG_SWITCH_PS_OFF                   _UxGT("Spegni aliment.")
@@ -97,6 +101,8 @@
 #define MSG_UBL_UNHOMED                     _UxGT("Home XYZ prima")
 #define MSG_UBL_TOOLS                       _UxGT("Strumenti UBL")
 #define MSG_UBL_LEVEL_BED                   _UxGT("Unified Bed Leveling")
+#define MSG_LCD_PROBING_MESH                _UxGT("Punto sondato")
+#define MSG_LCD_TILTING_MESH                _UxGT("Punto inclinaz.")
 #define MSG_IDEX_MENU                       _UxGT("Modo IDEX")
 #define MSG_OFFSETS_MENU                    _UxGT("Strumenti Offsets")
 #define MSG_IDEX_MODE_AUTOPARK              _UxGT("Auto-Park")
@@ -191,6 +197,7 @@
 #define MSG_MOVE_Z                          _UxGT("Muovi Z")
 #define MSG_MOVE_E                          _UxGT("Estrusore")
 #define MSG_HOTEND_TOO_COLD                 _UxGT("Ugello freddo")
+#define MSG_MOVE_0025MM                     _UxGT("Muovi di 0.025mm")
 #define MSG_MOVE_01MM                       _UxGT("Muovi di 0.1mm")
 #define MSG_MOVE_1MM                        _UxGT("Muovi di 1mm")
 #define MSG_MOVE_10MM                       _UxGT("Muovi di 10mm")
@@ -324,8 +331,18 @@
 #define MSG_BLTOUCH_SW_MODE                 _UxGT("BLTouch modo SW")
 #define MSG_BLTOUCH_5V_MODE                 _UxGT("BLTouch modo 5V")
 #define MSG_BLTOUCH_OD_MODE                 _UxGT("BLTouch modo OD")
-#define MSG_BLTOUCH_STOW                    _UxGT("Ritrai BLTouch")
+#define MSG_BLTOUCH_MODE_STORE              _UxGT("BLTouch modo mem.")
+#define MSG_BLTOUCH_MODE_STORE_5V           _UxGT("Metti BLTouch a 5V")
+#define MSG_BLTOUCH_MODE_STORE_OD           _UxGT("Metti BLTouch a OD")
+#define MSG_BLTOUCH_MODE_ECHO               _UxGT("Segnala modo")
+#define MSG_BLTOUCH_MODE_CHANGE             _UxGT("PERICOLO: Impostazioni errate possono cause danni! Procedo comunque?")
+#define MSG_TOUCHMI_PROBE                   _UxGT("TouchMI")
+#define MSG_TOUCHMI_INIT                    _UxGT("Inizializ.TouchMI")
+#define MSG_TOUCHMI_ZTEST                   _UxGT("Test Z offset")
+#define MSG_TOUCHMI_SAVE                    _UxGT("Memorizzare")
+#define MSG_MANUAL_DEPLOY_TOUCHMI           _UxGT("Estendi TouchMI")
 #define MSG_MANUAL_DEPLOY                   _UxGT("Estendi Sonda-Z")
+#define MSG_BLTOUCH_STOW                    _UxGT("Ritrai BLTouch")
 #define MSG_MANUAL_STOW                     _UxGT("Ritrai Sonda-Z")
 #define MSG_HOME                            _UxGT("Home")  // Usato come MSG_HOME " " MSG_X MSG_Y MSG_Z " " MSG_FIRST
 #define MSG_FIRST                           _UxGT("prima")
@@ -414,6 +431,7 @@
 #define MSG_FILAMENT_CHANGE_OPTION_RESUME   _UxGT("Riprendi stampa")
 #define MSG_FILAMENT_CHANGE_NOZZLE          _UxGT("  Ugello: ")
 #define MSG_RUNOUT_SENSOR                   _UxGT("Sens.filo termin.")  // Max 17 caratteri
+#define MSG_RUNOUT_DISTANCE_MM              _UxGT("Dist mm filo term.")
 #define MSG_ERR_HOMING_FAILED               _UxGT("Home fallito")
 #define MSG_ERR_PROBING_FAILED              _UxGT("Sondaggio fallito")
 #define MSG_M600_TOO_COLD                   _UxGT("M600:Troppo freddo")
