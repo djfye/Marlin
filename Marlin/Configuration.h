@@ -498,14 +498,14 @@
   // FIND YOUR OWN: "M303 E0 C8 S240" to run autotune on the hotend at 240 degreesC for 8 cycles.
 
   // Ultibots 24V 40W cartridge heater, sensor -3
-  #define DEFAULT_Kp 13.832483
-  #define DEFAULT_Ki 0.649931
-  #define DEFAULT_Kd 73.599190
+  //#define DEFAULT_Kp 13.832483
+  //#define DEFAULT_Ki 0.649931
+  //#define DEFAULT_Kd 73.599190
 
-  // Ultibots 24V 40W cartridge heater, sensor 5
-  //#define DEFAULT_Kp 20.88
-  //#define DEFAULT_Ki 2.69
-  //#define DEFAULT_Kd 40.50
+  // Ultibots 24V 40W cartridge heater, sensor 13
+  #define DEFAULT_Kp 10.93
+  #define DEFAULT_Ki 0.47
+  #define DEFAULT_Kd 63.37
 
 #endif // PIDTEMP
 

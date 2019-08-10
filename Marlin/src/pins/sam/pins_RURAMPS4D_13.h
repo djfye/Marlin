@@ -162,8 +162,8 @@
 #define PS_ON_PIN          -1   // 65
 
 // MKS TFT / Nextion Use internal USART-1
-//#define TFT_LCD_MODULE_COM        1
-//#define TFT_LCD_MODULE_BAUDRATE   250000
+#define TFT_LCD_MODULE_COM        1
+#define TFT_LCD_MODULE_BAUDRATE   250000
 
 // ESP WiFi Use internal USART-2
 #define ESP_WIFI_MODULE_COM       2
